@@ -212,7 +212,9 @@ try
 
     % 传递函数模型
     sys_tf = tfest(data, 1, 0);  % 一阶无零点
-    fprintf('  TF model (1阶): %s\n', tf(num(sys_tf), den(sys_tf)));
+    [num_tf, den_tf] = tfdata(tf(sys_tf));
+    fprintf('  TF model (1阶): K=%.3f, τ=%.3f\n', ...
+        dcgain(tf(sys_tf)), -1/den_tf{1}(2));
 catch ME
     fprintf('  Toolbox demo skipped: %s\n', ME.message);
 end

@@ -70,14 +70,21 @@ run(name);
 end
 
 function nSaved = save_figures(name, outDir)
-figs = flipud(findall(0, 'Type', 'figure'));   % 按创建顺序排列
-nSaved = numel(figs);
-for k = 1:nSaved
-    file = fullfile(outDir, sprintf('%s_fig%d.png', name, k));
+figs = flipud(findall(0, 'Type', 'figure'));
+nSaved = 0;
+for k = 1:length(figs)
+    if ~isgraphics(figs(k), 'figure'), continue; end
+    nSaved = nSaved + 1;
+    file = fullfile(outDir, sprintf('%s_fig%d.png', name, nSaved));
     try
         exportgraphics(figs(k), file, 'Resolution', 120);
     catch
-        saveas(figs(k), file);   % 兼容旧版本 MATLAB
+        try
+            saveas(figs(k), file);
+        catch
+            fprintf('  [警告] 第 %d 张图保存失败，跳过\n', k);
+            nSaved = nSaved - 1;
+        end
     end
 end
 end
