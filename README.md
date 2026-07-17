@@ -4,6 +4,7 @@
   <img src="https://img.shields.io/badge/Tutorials-15-blue?style=flat" alt="15 Tutorials">
   <img src="https://img.shields.io/badge/Language-ZH-red?style=flat" alt="Chinese">
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat" alt="MIT License">
+  <img src="https://img.shields.io/github/stars/xingd5478-ctrl/simulink-control-tutorial?style=flat" alt="Stars">
 </p>
 
 <h1 align="center">Simulink 控制工程教程</h1>
