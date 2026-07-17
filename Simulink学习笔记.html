@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulink 入门学习笔记 🚀</title>
+<title>Simulink 控制工程教程 · 21 课学习笔记</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
 
@@ -16,11 +16,10 @@
     padding: 20px;
   }
 
-  .container { max-width: 900px; margin: 0 auto; }
+  .container { max-width: 960px; margin: 0 auto; }
 
-  /* 顶部标题 */
   .hero {
-    background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe);
     background-size: 300% 300%;
     animation: gradient 8s ease infinite;
     border-radius: 30px;
@@ -28,198 +27,76 @@
     text-align: center;
     margin-bottom: 30px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
-    animation: sparkle 4s ease-in-out infinite;
   }
   @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  @keyframes sparkle {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(30px, -20px); }
-  }
   .hero h1 {
-    font-size: 2.4em;
+    font-size: 2.2em;
     color: #fff;
     text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
-    position: relative;
-    z-index: 1;
   }
-  .hero .date {
-    font-size: 1em;
-    color: rgba(255,255,255,0.9);
-    margin-top: 8px;
-    position: relative;
-    z-index: 1;
-  }
-  .hero .emoji-row {
-    font-size: 2em;
-    margin-top: 12px;
-    position: relative;
-    z-index: 1;
-    animation: bounce 2s ease-in-out infinite;
-  }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
+  .hero .subtitle { font-size: 1.1em; color: rgba(255,255,255,0.9); margin-top: 8px; }
+  .hero .meta { font-size: 0.9em; color: rgba(255,255,255,0.75); margin-top: 12px; }
+  .hero .meta a { color: #fff; text-decoration: underline; }
 
-  /* 卡片 */
+  .phase-title {
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 24px;
+    margin: 30px 0 16px;
+    font-weight: bold;
+    font-size: 1.15em;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .phase-title .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .phase-title .dot.p1 { background: #ff6b6b; }
+  .phase-title .dot.p2 { background: #667eea; }
+  .phase-title .dot.p3 { background: #00b894; }
+
   .card {
     background: #fff;
-    border-radius: 24px;
-    padding: 28px;
-    margin-bottom: 22px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
-    border: 3px solid #eee;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
+    border-radius: 20px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+    border-left: 5px solid #ddd;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(0,0,0,0.1);
-  }
-  .card::after {
-    content: '';
-    position: absolute;
-    top: -20px; right: -20px;
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    opacity: 0.08;
-  }
-  .card.t01::after { background: #ff6b6b; }
-  .card.t02::after { background: #feca57; }
-  .card.t03::after { background: #48dbfb; }
-  .card.t04::after { background: #a29bfe; }
-  .card.t05::after { background: #fd79a8; }
-  .card.t06::after { background: #00b894; }
+  .card:hover { transform: translateX(4px); box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
 
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .card-header .icon {
-    font-size: 2.4em;
-  }
-  .card-header h2 {
-    font-size: 1.5em;
-    color: #333;
-  }
-  .card-header .badge {
-    background: #f0f0f0;
-    border-radius: 12px;
-    padding: 3px 12px;
-    font-size: 0.75em;
-    color: #888;
-    margin-left: auto;
-  }
+  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .card-header .icon { font-size: 1.6em; }
+  .card-header h3 { font-size: 1.05em; color: #333; }
+  .card-header .tag { font-size: 0.7em; color: #999; background:#f5f5f5; padding:2px 10px; border-radius:10px; }
+  .card p { line-height: 1.7; color: #555; font-size: 0.92em; }
 
-  /* 颜色条 */
-  .card.t01 { border-color: #ff6b6b55; }
-  .card.t02 { border-color: #feca5755; }
-  .card.t03 { border-color: #48dbfb55; }
-  .card.t04 { border-color: #a29bfe55; }
-  .card.t05 { border-color: #fd79a855; }
-  .card.t06 { border-color: #00b89455; }
-
-  /* 内容 */
-  .card p { line-height: 1.8; color: #555; margin-bottom: 10px; }
+  .card.p1 { border-left-color: #ff6b6b; }
+  .card.p2 { border-left-color: #667eea; }
+  .card.p3 { border-left-color: #00b894; }
 
   .highlight-box {
-    background: #f8f9fa;
-    border-left: 5px solid #ff6b6b;
-    border-radius: 0 12px 12px 0;
-    padding: 14px 18px;
-    margin: 14px 0;
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 0.9em;
-    color: #444;
-    white-space: pre-wrap;
+    background: #f8f9fa; border-left: 4px solid #667eea;
+    border-radius: 0 10px 10px 0; padding: 12px 16px;
+    margin: 10px 0; font-family: 'Consolas','Courier New',monospace;
+    font-size: 0.85em; color: #444; white-space: pre-wrap;
   }
-  .card.t01 .highlight-box { border-left-color: #ff6b6b; }
-  .card.t02 .highlight-box { border-left-color: #feca57; }
-  .card.t03 .highlight-box { border-left-color: #48dbfb; }
-  .card.t04 .highlight-box { border-left-color: #a29bfe; }
-  .card.t05 .highlight-box { border-left-color: #fd79a8; }
-  .card.t06 .highlight-box { border-left-color: #00b894; }
-
-  /* 小提示 */
   .tip {
-    background: #fff9e6;
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin: 10px 0;
-    font-size: 0.9em;
-    color: #b8860b;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    background: #fff9e6; border-radius: 10px; padding: 10px 14px;
+    margin: 8px 0; font-size: 0.88em; color: #b8860b;
   }
-  .tip .bulb { font-size: 1.3em; flex-shrink: 0; }
-
-  /* 表格 */
-  .mini-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0;
-    font-size: 0.88em;
-  }
-  .mini-table th {
-    background: #f0f0f0;
-    padding: 10px 12px;
-    text-align: left;
-    border-radius: 8px 8px 0 0;
-  }
-  .mini-table td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .mini-table tr:hover { background: #fafafa; }
-
-  /* 流程图 */
-  .flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 16px 0;
-    font-family: 'Consolas', monospace;
-  }
-  .flow .block {
-    background: #e8eaf6;
-    border: 2px solid #c5cae9;
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 0.85em;
-    font-weight: bold;
-  }
-  .flow .arrow { font-size: 1.3em; color: #999; }
-
-  /* 底部 */
   .footer {
-    text-align: center;
-    padding: 30px;
-    color: #aaa;
-    font-size: 0.85em;
+    text-align: center; padding: 30px; color: #aaa; font-size: 0.85em;
+    margin-top: 20px;
   }
+  .footer a { color: #667eea; }
 
-  /* 响应式 */
   @media (max-width: 600px) {
-    .hero h1 { font-size: 1.5em; }
-    .card { padding: 18px; }
+    .hero h1 { font-size: 1.4em; }
+    .card { padding: 14px; }
   }
 </style>
 </head>
@@ -227,226 +104,170 @@
 
 <div class="container">
 
-  <!-- ====================== 页首 ====================== -->
   <div class="hero">
-    <h1>Simulink 入门学习笔记</h1>
-    <div class="date">2026年5月20日 · 6 课时速通</div>
-    <div class="emoji-row">🔧 ⚡ 📊 🎛️ 🔁 📂</div>
+    <h1>Simulink 控制工程教程</h1>
+    <div class="subtitle">从零基础到嵌入式代码部署 — 21 课系统学习</div>
+    <div class="meta">
+      2026年7月17日 ·
+      <a href="https://github.com/xingd5478-ctrl/simulink-control-tutorial" target="_blank">GitHub 仓库</a> ·
+      <a href="README.md" target="_blank">完整 README</a>
+    </div>
   </div>
 
-  <!-- ====================== 第 1 课 ====================== -->
-  <div class="card t01">
-    <div class="card-header">
-      <span class="icon">🔌</span>
-      <h2>第 1 课 · 信号基础</h2>
-      <span class="badge">t01_signal_basics</span>
-    </div>
-    <p>认识 Simulink 的<strong>三大基本要素</strong>：<span style="background:#ff6b6b22;padding:2px 8px;border-radius:6px;">模块 Block</span>、
-      <span style="background:#48dbfb22;padding:2px 8px;border-radius:6px;">信号线 Signal</span>、
-      <span style="background:#feca5722;padding:2px 8px;border-radius:6px;">仿真运行 Simulation</span></p>
+  <!-- ===== Phase 1 ===== -->
+  <div class="phase-title"><span class="dot p1"></span> Phase 1 · Simulink 基础（t01-t08）</div>
 
-    <div class="flow">
-      <span class="block">🔵 Sine Wave</span>
-      <span class="arrow">→</span>
-      <span class="block">🟡 Gain ×2</span>
-      <span class="arrow">→</span>
-      <span class="block">🟢 Scope</span>
-    </div>
-
+  <div class="card p1">
+    <div class="card-header"><span class="icon">🔌</span><h3>t01 · 信号基础</h3><span class="tag">t01_signal_basics</span></div>
+    <p>认识 Simulink 三大基本要素：模块 Block、信号线 Signal、仿真运行 Simulation。搭建第一个信号流：Sine Wave → Gain → Scope。</p>
     <div class="highlight-box">add_block('simulink/Sources/Sine Wave', ...)   % 拖模块
 add_line(mdl, 'Sine Wave/1', 'Gain/1')          % 连线
 set_param(..., 'Amplitude', '3')                % 改参数
 sim(mdl)                                         % 运行</div>
-
-    <div class="tip"><span class="bulb">💡</span> 核心直觉：振幅 A=3 的正弦波经 Gain=2 放大 → Scope 看到振幅 6 的波形。<strong>模块 = 乐高积木，连线 = 流水管，仿真 = 打开水龙头。</strong></div>
-
-    <table class="mini-table">
-      <tr><th>参数</th><th>叫什么</th><th>控制什么</th></tr>
-      <tr><td>Amplitude</td><td>振幅</td><td>波 "有多高"</td></tr>
-      <tr><td>Frequency</td><td>角频率</td><td>波 "有多密"（ω 越大振得越快）</td></tr>
-      <tr><td>Gain</td><td>增益</td><td>信号放大/缩小的倍数</td></tr>
-    </table>
+    <div class="tip">💡 模块 = 乐高积木，连线 = 流水管，仿真 = 打开水龙头。</div>
   </div>
 
-  <!-- ====================== 第 2 课 ====================== -->
-  <div class="card t02">
-    <div class="card-header">
-      <span class="icon">🧮</span>
-      <h2>第 2 课 · 数学运算与信号路由</h2>
-      <span class="badge">t02_math_blocks</span>
-    </div>
-    <p>学会把<strong>多路信号组合运算</strong>，以及 Mux/Demux 的 "捆线拆线"。</p>
-
-    <div class="flow">
-      <span class="block">Sine1 (ω=1)</span> <span class="arrow">↘</span>
-      <span class="block" style="background:#ffe0b2;border-color:#ffb74d;">Sum +</span> <span class="arrow">→</span>
-      <span class="block" style="background:#ffcdd2;border-color:#ef9a9a;">Product ×5</span> <span class="arrow">→</span>
-      <span class="block">Scope1</span>
-      <br>
-      <span class="block">Sine2 (ω=3)</span> <span class="arrow">↗</span>
-      <span style="margin:0 20px;"></span>
-      <span class="block">Constant=5</span> <span class="arrow">↑</span>
-    </div>
-
-    <div class="tip"><span class="bulb">🧠</span> <strong>物理直觉：</strong>两列正弦波相加 = 叠加原理（傅里叶思想）。乘以常量 = 放大器旋钮。Mux/Demux 不改变信号内容——只是把 3 根电线捆成一束再拆开，就像网线里的 8 根彩色细线。</div>
-
-    <table class="mini-table">
-      <tr><th>模块</th><th>作用</th><th>物理类比</th></tr>
-      <tr><td>Sum</td><td>信号相加/相减</td><td>两列声波叠加</td></tr>
-      <tr><td>Product</td><td>信号相乘</td><td>放大器增益旋钮</td></tr>
-      <tr><td>Mux</td><td>多路信号合并为总线</td><td>把电线捆成一束</td></tr>
-      <tr><td>Demux</td><td>总线拆回多路信号</td><td>把线束解开还原</td></tr>
-    </table>
+  <div class="card p1">
+    <div class="card-header"><span class="icon">🧮</span><h3>t02 · 数学运算与信号路由</h3><span class="tag">t02_math_blocks</span></div>
+    <p>Sum 加减、Product 乘除、Mux/Demux 信号捆绑与拆分。两列正弦波相加 = 叠加原理（傅里叶思想）。</p>
   </div>
 
-  <!-- ====================== 第 3 课 ====================== -->
-  <div class="card t03">
-    <div class="card-header">
-      <span class="icon">☕</span>
-      <h2>第 3 课 · 一阶系统与传递函数</h2>
-      <span class="badge">t03_first_order_sys</span>
-    </div>
-    <p>从 "摆积木" 进阶到 <strong>理解系统本身的动态特性</strong>。</p>
-
-    <div class="highlight-box">一阶系统标准形式：G(s) = K / (τs + 1)
-
-  K  — 稳态增益（最终放大倍数）
-  τ  — 时间常数（惯性/惰性，越大越慢）</div>
-
-    <div class="tip"><span class="bulb">🫖</span> <strong>生活例子：</strong>一杯热水放在桌上降温。水温不会瞬间降到室温，而是慢慢逼近——这就是一阶系统的行为。τ 越小 = 杯子越小散热越快；K = 最终温度和初始温度的比值。</div>
-
-    <p>教程同时比较了 <strong>τ = 0.5 / 2 / 5</strong> 三个系统对同一阶跃信号的响应：</p>
-    <table class="mini-table">
-      <tr><th>τ 值</th><th>响应速度</th><th>物理想象</th></tr>
-      <tr><td>0.5</td><td>⚡ 最快</td><td>小杯子，热水凉得快</td></tr>
-      <tr><td>2.0</td><td>🐢 中等</td><td>中等杯子</td></tr>
-      <tr><td>5.0</td><td>🐌 最慢</td><td>大缸，凉得慢</td></tr>
-    </table>
-
-    <div class="tip"><span class="bulb">✅</span> <strong>学会标志：</strong>能回答 "τ=0.5 和 τ=5 谁先到稳态？"（τ 越小越快）；"K=3 输入阶跃 0→1，输出最终稳定在几？"（3×1=3）</div>
+  <div class="card p1">
+    <div class="card-header"><span class="icon">☕</span><h3>t03 · 一阶系统与传递函数</h3><span class="tag">t03_first_order_sys</span></div>
+    <p>理解系统动态特性：G(s) = K/(τs+1)。K = 稳态增益，τ = 时间常数（惯性）。比较 τ=0.5/2/5 对阶跃的响应。</p>
+    <div class="tip">🫖 一杯热水降温——水温不会瞬间降到室温，而是慢慢逼近。τ 越小 = 杯子越小散热越快。</div>
   </div>
 
-  <!-- ====================== 第 4 课 ====================== -->
-  <div class="card t04">
-    <div class="card-header">
-      <span class="icon">🎢</span>
-      <h2>第 4 课 · 二阶系统与阻尼特性</h2>
-      <span class="badge">t04_second_order_sys</span>
-    </div>
-    <p>一阶系统的自然延伸——引入 <strong>阻尼比 ζ</strong> 和 <strong>超调量</strong> 的概念。</p>
-
-    <div class="highlight-box">二阶系统标准形式：G(s) = ωₙ² / (s² + 2ζωₙs + ωₙ²)
-
-  ωₙ — 自然频率（系统 "想振多快"）
-  ζ  — 阻尼比（系统 "被抑制多狠"）</div>
-
-    <table class="mini-table">
-      <tr><th>阻尼比 ζ</th><th>行为</th><th>类比</th></tr>
-      <tr><td>ζ = 0</td><td>纯振荡，永远不停</td><td>理想弹簧（无摩擦）</td></tr>
-      <tr><td>0 &lt; ζ &lt; 1</td><td>衰减振荡，有超调</td><td>汽车过减速带后晃几下</td></tr>
-      <tr><td>ζ = 1</td><td>临界阻尼，无超调最快</td><td>刚好不晃的门</td></tr>
-      <tr><td>ζ &gt; 1</td><td>过阻尼，无超调但慢</td><td>门被阻尼器拉着慢慢关</td></tr>
-    </table>
-
-    <div class="tip"><span class="bulb">🔗</span> <strong>和 PID 的联系：</strong>ζ 太小 → 超调严重 → 需要 PID 的 D 参数来 "增加阻尼"，抑制超调。这就是为什么第 4 课是第 5 课的前置知识。</div>
+  <div class="card p1">
+    <div class="card-header"><span class="icon">🎢</span><h3>t04 · 二阶系统与阻尼特性</h3><span class="tag">t04_second_order_sys</span></div>
+    <p>G(s) = ωn²/(s² + 2ζωns + ωn²)。ζ 阻尼比决定振荡行为：ζ=0 纯振荡、0&lt;ζ&lt;1 衰减振荡、ζ=1 临界阻尼、ζ&gt;1 过阻尼。</p>
+    <div class="tip">🔗 ζ 太小 → 超调严重 → 需要 PID 的 D 参数来 "增加阻尼"，这就是 t04 是 t05 前置的原因。</div>
   </div>
 
-  <!-- ====================== 第 5 课 ====================== -->
-  <div class="card t05">
-    <div class="card-header">
-      <span class="icon">🎯</span>
-      <h2>第 5 课 · PID 反馈控制</h2>
-      <span class="badge">t05_pid_control</span>
-    </div>
-    <p>经典控制的<strong>核心</strong>——让输出自动追着目标跑。</p>
-
-    <div class="highlight-box">PID 公式：u(t) = Kp·e(t) + Ki·∫e(t)dt + Kd·de(t)/dt
-
-  e(t) = 设定值 − 实际输出（误差）
-  Kp — 比例：有误差立刻反应（但可能有残余）
-  Ki — 积分：累积误差，消除残余（过大会振荡）
-  Kd — 微分：预测趋势，抑制超调（怕噪声）</div>
-
-    <div class="flow">
-      <span class="block">设定值</span> <span class="arrow">→</span>
-      <span class="block" style="background:#ffcdd2;border-color:#ef9a9a;">误差 Error</span> <span class="arrow">→</span>
-      <span class="block" style="background:#e8eaf6;border-color:#7986cb;">PID 控制器</span> <span class="arrow">→</span>
-      <span class="block">被控对象 Plant</span> <span class="arrow">→</span>
-      <span class="block">输出</span><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="arrow">←────── 反馈回路 ──────←</span>
-    </div>
-
-    <table class="mini-table">
-      <tr><th>参数</th><th>增大效果</th><th>副作用</th></tr>
-      <tr><td>Kp ↑</td><td>响应更快、更猛</td><td>超调增大、可能振荡</td></tr>
-      <tr><td>Ki ↑</td><td>消除稳态误差</td><td>过大会剧烈振荡</td></tr>
-      <tr><td>Kd ↑</td><td>抑制超调、更 "稳"</td><td>放大高频噪声</td></tr>
-    </table>
-
-    <div class="tip"><span class="bulb">🧪</span> <strong>动手实验建议：</strong>① 只保留 P（I=0, D=0）→ 看稳态误差；② 加大 I → 看误差消除过程振荡；③ 加大 D → 看超调被抑制；④ I 太大 → 看积分饱和现象。</div>
+  <div class="card p1">
+    <div class="card-header"><span class="icon">🎯</span><h3>t05 · PID 反馈控制</h3><span class="tag">t05_pid_control</span></div>
+    <p>经典控制核心：u(t) = Kp·e + Ki·∫e + Kd·de/dt。P 有误差立刻反应、I 累积消除残余、D 预测抑制超调。分别验证 P/I/D 单独作用 + 联合闭环调参。</p>
   </div>
 
-  <!-- ====================== 第 6 课 ====================== -->
-  <div class="card t06">
-    <div class="card-header">
-      <span class="icon">📂</span>
-      <h2>第 6 课 · 信号导入导出</h2>
-      <span class="badge">t06_sources_and_sinks</span>
-    </div>
-    <p>打通 <strong>MATLAB ↔ Simulink 数据交换</strong>的通道——让 Simulink 不再是一个封闭沙盒。</p>
-
-    <table class="mini-table">
-      <tr><th>方向</th><th>模块</th><th>做什么</th></tr>
-      <tr><td>📥 进口</td><td>From Workspace</td><td>把 MATLAB 变量/实验数据喂进 Simulink</td></tr>
-      <tr><td>📤 出口</td><td>To Workspace</td><td>仿真结果 → MATLAB 变量（可做 FFT、统计等）</td></tr>
-      <tr><td>📤 出口</td><td>To File</td><td>仿真结果 → .mat 文件持久化保存</td></tr>
-      <tr><td>👀 监视</td><td>Display</td><td>实时显示当前信号数值（调试神器）</td></tr>
-      <tr><td>👀 监视</td><td>Scope</td><td>看波形（只能眼看，不能处理数据）</td></tr>
-    </table>
-
-    <div class="flow">
-      <span class="block">MATLAB 变量</span> <span class="arrow">→</span>
-      <span class="block">From Workspace</span> <span class="arrow">→</span>
-      <span class="block" style="background:#c8e6c9;border-color:#66bb6a;">你的模型</span> <span class="arrow">→</span>
-      <span class="block">To Workspace</span> <span class="arrow">→</span>
-      <span class="block">MATLAB 变量</span>
-    </div>
-
-    <div class="highlight-box">% 导出后可以做 Scope 做不到的事：
-max(saved_data.Data)       % 求最大值
-fft(saved_data.Data)       % 频谱分析
-mean(saved_data.Data)      % 求均值</div>
-
-    <div class="tip"><span class="bulb">🌟</span> <strong>一句话：</strong>From Workspace = 进口，To Workspace/To File = 出口。学会这扇门，Simulink 就和整个 MATLAB 生态打通了——读取真实数据 → 仿真 → 导出分析 → 写论文，一条龙。</div>
-
-    <p>还学了四种信号源：<strong>Ramp</strong>（线性斜升 ↗）、<strong>Pulse</strong>（方波脉冲 ⊓⊓）、<strong>From Workspace</strong>（自定义）、<strong>Signal Builder</strong>（鼠标画波形）。</p>
+  <div class="card p1">
+    <div class="card-header"><span class="icon">📂</span><h3>t06 · 信号导入导出</h3><span class="tag">t06_sources_and_sinks</span></div>
+    <p>打通 MATLAB ↔ Simulink 数据交换：From Workspace (进口)、To Workspace/To File (出口)、Display/Scope (监视)。学完这课就能把仿真结果拿到 MATLAB 做 FFT、统计等后处理。</p>
   </div>
 
-  <!-- ====================== 总结 ====================== -->
-  <div class="card" style="border-color:#ff6b6b55; background: linear-gradient(135deg, #fff5f5, #f5f5ff);">
-    <div class="card-header">
-      <span class="icon">🗺️</span>
-      <h2>学习路径回顾</h2>
-    </div>
-    <p>今天从零开始，沿这条路线走完了 Simulink 入门：</p>
-    <div class="flow">
-      <span class="block">🔌 搭积木</span> <span class="arrow">→</span>
-      <span class="block">🧮 算信号</span> <span class="arrow">→</span>
-      <span class="block">☕ 一阶系统</span> <span class="arrow">→</span>
-      <span class="block">🎢 二阶系统</span> <span class="arrow">→</span>
-      <span class="block">🎯 PID 控制</span> <span class="arrow">→</span>
-      <span class="block">📂 数据交换</span>
-    </div>
-    <p style="margin-top: 16px; text-align: center; color: #888; font-size: 0.9em;">
-      ✨ 核心方法论：运行代码 → 观察模型 → 修改参数 → 理解原理 ✨
+  <div class="card p1">
+    <div class="card-header"><span class="icon">📦</span><h3>t07 · 子系统封装</h3><span class="tag">t07_subsystem</span></div>
+    <p>将复杂模型折叠成黑盒子——理解层次化建模思想。把 PID+Plant 整个闭环压成一个 Subsystem，输入=设定值，输出=实际值。</p>
+  </div>
+
+  <div class="card p1">
+    <div class="card-header"><span class="icon">🎛️</span><h3>t08 · Mask 参数化封装</h3><span class="tag">t08_masking</span></div>
+    <p>自定义参数对话框，让子系统可复用、可配置。双击弹出参数窗口，输入 Kp/Ki/Kd 即可——不用每次打开子系统内部。</p>
+  </div>
+
+  <!-- ===== Phase 2 ===== -->
+  <div class="phase-title"><span class="dot p2"></span> Phase 2 · 控制理论（t09-t12 + t16-t21）</div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">📐</span><h3>t09 · 状态空间模型</h3><span class="tag">t09_state_space</span></div>
+    <p>现代控制理论基础：ẋ=Ax+Bu, y=Cx+Du。从传递函数到状态空间，理解"状态"的物理意义，能控性/能观性。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">🎯</span><h3>t10 · LQR 最优控制</h3><span class="tag">t10_state_feedback</span></div>
+    <p>极点配置 → LQR → Riccati 方程。Q/R 权重矩阵调参策略：Q 大=重视性能，R 大=节省能量。多变量系统设计的核心工具。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">👁️</span><h3>t11 · Luenberger 状态观测器</h3><span class="tag">t11_observer</span></div>
+    <p>当状态不可直接测量时——用观测器"估计"状态。x̂̇ = Ax̂ + Bu + L(y-ŷ)。对偶原理，分离原理验证。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">🔮</span><h3>t12 · Kalman 滤波</h3><span class="tag">t12_kalman_filter</span></div>
+    <p>噪声环境下的最优状态估计。过程噪声 Q 与测量噪声 R 建模，lqe() 设计。与 Luenberger 对比：Kalman 在噪声下更优。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">📈</span><h3>t16 · 频域分析</h3><span class="tag">t16_freq_domain</span></div>
+    <p>Bode 图 / Nyquist 图 / Nichols 图。增益裕度 GM、相位裕度 PM——频域稳定性判据。不同增益 K 对稳定裕度的影响。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">✏️</span><h3>t17 · 超前-滞后校正</h3><span class="tag">t17_lead_lag</span></div>
+    <p>根轨迹法设计 Lead/Lag 补偿器。Lead = 增加相位裕度（改善暂态），Lag = 提高低频增益（改善稳态）。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">🔬</span><h3>t18 · 系统辨识</h3><span class="tag">t18_system_id</span></div>
+    <p>从实验数据到数学模型。阶跃响应法提取 K/τ/θ，最小二乘法拟合。模型验证：残差分析、交叉验证。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">🛡️</span><h3>t19 · H∞ 鲁棒控制</h3><span class="tag">t19_robust_control</span></div>
+    <p>主动考虑参数不确定性（±20%）。混合灵敏度 S/KS/T 整形 → hinfsyn 求解 → μ 分析。LQR 单一名义模型 vs H∞ 全局鲁棒。</p>
+    <div class="highlight-box">H∞ 设计流程：
+ureal('m',1.0,'±20%')  →  W1/W2/W3 加权  →  hinfsyn(P,1,1)  →  γ&lt;1 ? 成功 : 放松权重</div>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">🧠</span><h3>t20 · 模型预测控制 MPC</h3><span class="tag">t20_mpc</span></div>
+    <p>滚动优化 + QP 约束求解 + 显式 MPC。带输入/状态约束的多变量控制——工业过程控制的标配。</p>
+  </div>
+
+  <div class="card p2">
+    <div class="card-header"><span class="icon">⚡</span><h3>t21 · 滑模控制 SMC</h3><span class="tag">t21_sliding_mode</span></div>
+    <p>非线性鲁棒控制。滑模面 s=λe+ė → 0，等效控制 + 切换控制。抖振抑制：饱和函数 / Super-Twisting 算法。</p>
+  </div>
+
+  <!-- ===== Phase 3 ===== -->
+  <div class="phase-title"><span class="dot p3"></span> Phase 3 · 机电系统 + 部署（t13-t15）</div>
+
+  <div class="card p3">
+    <div class="card-header"><span class="icon">⚙️</span><h3>t13 · DC 电机控制</h3><span class="tag">t13_dc_motor</span></div>
+    <p>电磁转矩 + 机械负载耦合建模。级联 PI（电流环+转速环），LQR 对比。执行器建模实战。</p>
+  </div>
+
+  <div class="card p3">
+    <div class="card-header"><span class="icon">🔋</span><h3>t14 · PMSM + FOC 矢量控制</h3><span class="tag">t14_foc_pmsm</span></div>
+    <p>Clarke → Park 坐标变换，d-q 解耦，SVPWM 原理。无刷电机矢量控制全流程——新能源车/机器人关节的核心技术。</p>
+  </div>
+
+  <div class="card p3">
+    <div class="card-header"><span class="icon">💻</span><h3>t15 · C 代码生成与嵌入式部署</h3><span class="tag">t15_code_generation</span></div>
+    <p>连续→离散 (c2d)，离散 LQR (dlqr)，生成 C 代码，FreeRTOS 集成框架。不依赖 Simulink Coder——手动完成全流程。</p>
+    <div class="highlight-box">连续设计 → c2d 离散化 → dlqr 离散增益 → C 代码 → STM32</div>
+  </div>
+
+  <!-- ===== 学习路径 ===== -->
+  <div class="card" style="border-left-color:#ff6b6b; background: linear-gradient(135deg, #fff5f5, #f5f5ff);">
+    <div class="card-header"><span class="icon">🗺️</span><h3>学习路径总览</h3></div>
+    <div class="highlight-box">t01-t08 基础操作 ──→ t09 状态空间 ──→ t10 LQR 控制
+                     │    │               │
+                     │    ├── t11 观测器 ←── t12 Kalman
+                     │    │
+                     ├── t16 频域分析 ──→ t17 校正器设计
+                     │
+                     ├── t18 系统辨识
+                     │
+                     ├── t19 H∞ 鲁棒控制
+                     │
+                     ├── t20 MPC 模型预测控制
+                     │
+                     └── t21 滑模控制 (SMC)
+                         │
+         ┌───────────────┘
+         ↓
+    t13 DC电机 ←── t14 PMSM/FOC ←── t15 代码生成 → 嵌入式部署</div>
+    <p style="margin-top:12px;text-align:center;color:#888;">
+      ✨ 核心方法论：运行代码 → 观察模型 → 修改参数 → 理解原理 ✨<br>
+      在 MATLAB 命令窗口输入 <code style="background:#f0f0f0;padding:2px 8px;border-radius:4px;">run_all_tutorials</code> 一键运行全部 21 课
     </p>
   </div>
 
   <div class="footer">
-    Simulink 学习笔记 · 2026.05.20 · 用 ❤️ 和 ☕ 写成
+    Simulink 控制工程教程 · 21 课 · v1.1.0<br>
+    <a href="https://github.com/xingd5478-ctrl/simulink-control-tutorial" target="_blank">GitHub 仓库</a> ·
+    MIT License · 邢栋 · 2026
   </div>
 
 </div>

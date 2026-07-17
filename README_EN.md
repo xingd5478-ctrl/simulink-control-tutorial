@@ -178,7 +178,7 @@ After completing all 21 lessons, you will be able to:
 .
 ├── t00_main_guide.m              # Tutorial index
 ├── t01-t21_*.m                   # 21 tutorial scripts
-├── tutorial01-tutorial15.slx     # Simulink models (auto-generated)
+├── tutorial01-tutorial14.slx     # Simulink models (auto-generated)
 ├── run_all_tutorials.m           # Batch runner for all tutorials
 ├── docs/images/                  # Auto-generated simulation figures
 ├── .github/                      # Issue/PR templates

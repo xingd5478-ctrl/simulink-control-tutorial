@@ -223,7 +223,7 @@ t01-t08 基础操作 ──→ t09 状态空间 ──→ t10 LQR 控制
 .
 ├── t00_main_guide.m              # 教程索引（运行查看全貌）
 ├── t01-t21_*.m                   # 21 个教程主脚本
-├── tutorial01-tutorial15.slx     # Simulink 模型文件（脚本自动生成）
+├── tutorial01-tutorial14.slx     # Simulink 模型文件（脚本自动生成）
 ├── run_all_tutorials.m           # 一键运行全部教程
 ├── docs/images/                  # 自动生成的仿真结果图
 ├── .github/                      # Issue/PR 模板
