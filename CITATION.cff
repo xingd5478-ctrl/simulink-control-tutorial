@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this tutorial in your teaching or research, please cite it as below."
+authors:
+  - family-names: "Xing"
+    given-names: "Dong"
+    orcid: ""
+title: "Simulink Control Engineering Tutorial"
+version: 1.1.0
+date-released: 2026-07-17
+url: "https://github.com/xingd5478-ctrl/simulink-control-tutorial"
+abstract: "A comprehensive 21-lesson Simulink tutorial for control engineering, covering from basic block manipulation to industrial-grade algorithms (LQR, Kalman, H∞, MPC, SMC) and embedded C code generation."
+keywords:
+  - "Simulink"
+  - "Control Engineering"
+  - "MATLAB"
+  - "PID Control"
+  - "LQR"
+  - "Kalman Filter"
+  - "H-infinity"
+  - "MPC"
+  - "Sliding Mode Control"
+  - "Embedded Systems"
+license: MIT
+repository-code: "https://github.com/xingd5478-ctrl/simulink-control-tutorial"
+type: educational

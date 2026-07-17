@@ -56,6 +56,7 @@
 % ============================================================
 
 clear; close all;
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% ===== 第 0 步：系统参数与理论推导 =====
 
@@ -430,39 +431,3 @@ fprintf('     写出 A, B, C, D 矩阵，填入 State-Space 模块验证\n\n');
 fprintf('  下一课预告：t10 将在状态空间的基础上\n');
 fprintf('  学习 LQR 最优控制和极点配置——真正开始设计控制器！\n');
 
-% ============================================================
-% 辅助函数：提取 To Workspace 数据
-% ============================================================
-function data = getSimData(simOut, varName, t)
-    % 从 simulation output 中提取数据，兼容新旧版本
-    try
-        val = simOut.get(varName);
-    catch
-        % 回退：尝试从工作空间直接获取
-        try
-            val = evalin('base', varName);
-        catch
-            data = NaN(length(t), 1);
-            return;
-        end
-    end
-
-    if isstruct(val) && isfield(val, 'signals')
-        data = val.signals.values;
-        if length(data) ~= length(t)
-            data = interp1(val.time, data, t, 'linear', 'extrap');
-        end
-    elseif isa(val, 'timeseries')
-        data = val.Data;
-        if length(data) ~= length(t)
-            data = interp1(val.Time, data, t, 'linear', 'extrap');
-        end
-    elseif isnumeric(val)
-        data = val;
-        if length(data) ~= length(t)
-            data = interp1(linspace(0, t(end), length(data))', data, t, 'linear', 'extrap');
-        end
-    else
-        data = NaN(length(t), 1);
-    end
-end

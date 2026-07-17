@@ -85,6 +85,7 @@
 % ============================================================
 
 clear; close all;
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% ===== PMSM 参数（小型云台/机器人关节电机）=====
 
@@ -489,42 +490,3 @@ fprintf('     机器人平衡 = 传感器 + 估计 + 控制 + FOC！\n\n');
 fprintf('  下一课预告：t15 — 从 Simulink 到 C 代码\n');
 fprintf('  把控制算法部署到 STM32！生成嵌入式代码！\n');
 
-% ============================================================
-function data = getSimData(simOut, varName, t)
-    val = [];
-    try
-        val = evalin('base', varName);
-    catch
-    end
-    if isempty(val)
-        try
-            val = simOut.get(varName);
-        catch
-        end
-    end
-    if isempty(val)
-        data = zeros(length(t), 1);
-        return;
-    end
-
-    if isstruct(val) && isfield(val, 'signals')
-        data = val.signals.values;
-        if length(data) ~= length(t)
-            data = interp1(val.time, data, t, 'linear', 'extrap');
-        end
-    elseif isa(val, 'timeseries')
-        data = val.Data;
-        if length(data) ~= length(t)
-            data = interp1(val.Time, data, t, 'linear', 'extrap');
-        end
-    elseif isnumeric(val)
-        data = val;
-        if isscalar(data)
-            data = data * ones(length(t), 1);
-        elseif length(data) ~= length(t)
-            data = interp1(linspace(0, t(end), length(data))', data, t, 'linear', 'extrap');
-        end
-    else
-        data = zeros(length(t), 1);
-    end
-end

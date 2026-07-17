@@ -34,6 +34,7 @@
 % ============================================================
 
 clear; close all;
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% ===== 参数定义 =====
 
@@ -502,71 +503,3 @@ fprintf('  无刷电机 (BLDC/PMSM) 是机器人和新能源的核心\n');
 fprintf('  FOC = Clarke/Park 变换 + 电流环 + 速度环\n');
 fprintf('  核心还是 PI + 状态空间！\n');
 
-% ============================================================
-function data = getSimData(simOut, varName, t)
-    % 多层回退：先 workspace，再 simOut，再 logsout
-    val = [];
-
-    % 方法1：直接从 base workspace 拿
-    try
-        val = evalin('base', varName);
-    catch
-    end
-
-    % 方法2：从 simOut.get 拿
-    if isempty(val)
-        try
-            val = simOut.get(varName);
-        catch
-        end
-    end
-
-    % 方法3：从 simOut.logsout 拿
-    if isempty(val)
-        try
-            val = simOut.logsout.get(varName);
-        catch
-        end
-    end
-
-    if isempty(val)
-        fprintf('  [WARN] getSimData: 变量 ''%s'' 未找到\n', varName);
-        data = zeros(length(t), 1);
-        return;
-    end
-
-    % 提取数据
-    if isstruct(val) && isfield(val, 'signals')
-        data = val.signals.values;
-        if length(data) ~= length(t)
-            data = interp1(val.time, data, t, 'linear', 'extrap');
-        end
-    elseif isa(val, 'timeseries')
-        data = val.Data;
-        if length(data) ~= length(t)
-            data = interp1(val.Time, data, t, 'linear', 'extrap');
-        end
-    elseif isa(val, 'Simulink.SimulationData.Dataset')
-        % Dataset 格式
-        try
-            el = val.getElement(1);
-            data = el.Values.Data;
-            if length(data) ~= length(t)
-                data = interp1(el.Values.Time, data, t, 'linear', 'extrap');
-            end
-        catch
-            data = zeros(length(t), 1);
-        end
-    elseif isnumeric(val)
-        data = val;
-        if isscalar(data)
-            data = data * ones(length(t), 1);
-        elseif length(data) ~= length(t)
-            data = interp1(linspace(0, t(end), length(data))', data, t, 'linear', 'extrap');
-        end
-    else
-        fprintf('  [WARN] getSimData: 未知数据类型 for ''%s'': %s\n', ...
-            varName, class(val));
-        data = zeros(length(t), 1);
-    end
-end

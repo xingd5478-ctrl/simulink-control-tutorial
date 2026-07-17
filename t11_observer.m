@@ -72,6 +72,7 @@
 % ============================================================
 
 clear; close all;
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% ===== 系统参数（沿用 t09/t10）=====
 
@@ -428,35 +429,3 @@ fprintf('  但本质上，Kalman = 带噪声模型的 Luenberger 观测器！\n'
 
 % ============================================================
 % 辅助函数
-% ============================================================
-function data = getSimData(simOut, varName, t)
-    try
-        val = simOut.get(varName);
-    catch
-        try
-            val = evalin('base', varName);
-        catch
-            data = NaN(length(t), 1);
-            return;
-        end
-    end
-
-    if isstruct(val) && isfield(val, 'signals')
-        data = val.signals.values;
-        if length(data) ~= length(t)
-            data = interp1(val.time, data, t, 'linear', 'extrap');
-        end
-    elseif isa(val, 'timeseries')
-        data = val.Data;
-        if length(data) ~= length(t)
-            data = interp1(val.Time, data, t, 'linear', 'extrap');
-        end
-    elseif isnumeric(val)
-        data = val;
-        if length(data) ~= length(t)
-            data = interp1(linspace(0, t(end), length(data))', data, t, 'linear', 'extrap');
-        end
-    else
-        data = NaN(length(t), 1);
-    end
-end

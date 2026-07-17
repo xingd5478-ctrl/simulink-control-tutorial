@@ -74,6 +74,7 @@
 % ============================================================
 
 clear; close all;
+addpath(fullfile(fileparts(mfilename('fullpath')), 'utils'));
 
 %% ===== 系统参数（沿用 t09 的质量-弹簧-阻尼）=====
 
@@ -464,36 +465,4 @@ fprintf('  Kalman 滤波就是观测器的随机版本！\n');
 % ============================================================
 function s = signStr(x)
     if x >= 0, s = '+'; else, s = '-'; end
-end
-
-function data = getSimData(simOut, varName, t)
-    try
-        val = simOut.get(varName);
-    catch
-        try
-            val = evalin('base', varName);
-        catch
-            data = NaN(length(t), 1);
-            return;
-        end
-    end
-
-    if isstruct(val) && isfield(val, 'signals')
-        data = val.signals.values;
-        if length(data) ~= length(t)
-            data = interp1(val.time, data, t, 'linear', 'extrap');
-        end
-    elseif isa(val, 'timeseries')
-        data = val.Data;
-        if length(data) ~= length(t)
-            data = interp1(val.Time, data, t, 'linear', 'extrap');
-        end
-    elseif isnumeric(val)
-        data = val;
-        if length(data) ~= length(t)
-            data = interp1(linspace(0, t(end), length(data))', data, t, 'linear', 'extrap');
-        end
-    else
-        data = NaN(length(t), 1);
-    end
 end
