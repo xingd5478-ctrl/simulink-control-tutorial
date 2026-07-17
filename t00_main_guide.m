@@ -7,7 +7,7 @@
 %    2. 添加模块、连线、设置参数
 %    3. 运行仿真并生成结果图
 %
-%  三个阶段，15 个教程：
+%  三个阶段，21 个教程：
 %
 %  Phase 1 — Simulink 基础
 %    t01_signal_basics      — 认识模块与信号
@@ -24,6 +24,12 @@
 %    t10_state_feedback     — 极点配置与 LQR 最优控制
 %    t11_observer           — Luenberger 状态观测器
 %    t12_kalman_filter      — Kalman 滤波
+%    t16_freq_domain        — 频域分析：Bode/Nyquist/稳定裕度
+%    t17_lead_lag           — 超前-滞后校正器设计
+%    t18_system_id          — 系统辨识：从实验数据到模型
+%    t19_robust_control     — H∞ 鲁棒控制与 μ 分析
+%    t20_mpc                — 模型预测控制 (MPC)
+%    t21_sliding_mode       — 滑模控制：非线性鲁棒控制
 %
 %  Phase 3 — 机电系统与部署
 %    t13_dc_motor           — 直流电机建模与级联控制
@@ -61,7 +67,13 @@ fprintf('--- Phase 2: 控制理论 ---\n');
 fprintf('第 9 课  | t09_state_space        | 状态空间模型 ẋ=Ax+Bu\n');
 fprintf('第 10 课 | t10_state_feedback     | 极点配置、LQR 最优控制\n');
 fprintf('第 11 课 | t11_observer           | Luenberger 状态观测器\n');
-fprintf('第 12 课 | t12_kalman_filter      | Kalman 滤波、噪声建模\n\n');
+fprintf('第 12 课 | t12_kalman_filter      | Kalman 滤波、噪声建模\n');
+fprintf('第 16 课 | t16_freq_domain        | 频域分析 Bode/Nyquist/稳定裕度\n');
+fprintf('第 17 课 | t17_lead_lag           | 超前-滞后校正器设计\n');
+fprintf('第 18 课 | t18_system_id          | 系统辨识：从数据到模型\n');
+fprintf('第 19 课 | t19_robust_control     | H∞ 鲁棒控制与 μ 分析\n');
+fprintf('第 20 课 | t20_mpc                | 模型预测控制 MPC\n');
+fprintf('第 21 课 | t21_sliding_mode       | 滑模控制：非线性鲁棒控制\n\n');
 
 fprintf('--- Phase 3: 机电系统与部署 ---\n');
 fprintf('第 13 课 | t13_dc_motor           | 直流电机建模、级联 PI\n');

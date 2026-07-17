@@ -1,5 +1,5 @@
 function run_all_tutorials()
-%RUN_ALL_TUTORIALS 一键依次运行全部 15 个教程
+%RUN_ALL_TUTORIALS 一键依次运行全部 21 个教程
 %
 %   每课运行完毕后暂停，方便查看模型和截图；
 %   所有 Figure 会同时自动保存为 PNG 到 docs/images/，
@@ -23,7 +23,13 @@ tutorials = { ...
     't12_kalman_filter'
     't13_dc_motor'
     't14_foc_pmsm'
-    't15_code_generation'};
+    't15_code_generation'
+    't16_freq_domain'
+    't17_lead_lag'
+    't18_system_id'
+    't19_robust_control'
+    't20_mpc'
+    't21_sliding_mode'};
 
 outDir = fullfile(fileparts(mfilename('fullpath')), 'docs', 'images');
 if ~exist(outDir, 'dir'), mkdir(outDir); end

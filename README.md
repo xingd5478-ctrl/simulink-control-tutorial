@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/MATLAB-R2020a+-0076A8?style=flat" alt="MATLAB">
   <img src="https://img.shields.io/badge/Simulink-Control_Systems-FF6600?style=flat" alt="Simulink">
-  <img src="https://img.shields.io/badge/Tutorials-15-blue?style=flat" alt="15 Tutorials">
+  <img src="https://img.shields.io/badge/Tutorials-21-blue?style=flat" alt="21 Tutorials">
   <img src="https://img.shields.io/badge/Language-ZH-red?style=flat" alt="Chinese">
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat" alt="MIT License">
   <img src="https://img.shields.io/github/stars/xingd5478-ctrl/simulink-control-tutorial?style=flat" alt="Stars">
@@ -26,7 +26,7 @@
 
 ## 教程总览
 
-15 个教程，分三个阶段，覆盖从基础操作到企业级控制算法的完整学习路径。
+21 个教程，分三个阶段，覆盖从基础操作到企业级控制算法的完整学习路径。
 
 ### Phase 1 — Simulink 基础 (t01-t08)
 
@@ -49,6 +49,12 @@
 | t10 | LQR 最优控制 | 极点配置、Riccati 方程、Q/R 调参 | 多变量系统设计 |
 | t11 | 状态观测器 | Luenberger Observer、对偶性、(A-LC) | 无传感器控制 |
 | t12 | Kalman 滤波 | lqe()、Q/R 噪声建模、Luenberger 对比 | 噪声环境最优估计 |
+| t16 | 频域分析 | Bode图、Nyquist图、增益/相位裕度 | 频域稳定性判据 |
+| t17 | 超前-滞后校正 | 根轨迹设计、Lead/Lag 补偿器 | 经典控制设计方法 |
+| t18 | 系统辨识 | 阶跃响应法、最小二乘、模型验证 | 从实验数据到数学模型 |
+| t19 | H∞ 鲁棒控制 | 混合灵敏度、hinfsyn、μ 分析 | 不确定性下的最优控制 |
+| t20 | 模型预测控制 MPC | 滚动优化、QP 约束求解、显式 MPC | 带约束的多变量控制 |
+| t21 | 滑模控制 SMC | 滑模面、抖振抑制、Super-Twisting | 非线性鲁棒控制 |
 
 ### Phase 3 — 机电系统 + 部署 (t13-t15)
 
@@ -69,7 +75,7 @@
 >> t10_state_feedback      % LQR 控制
 >> t15_code_generation     % 生成 C 代码
 
->> run_all_tutorials       % 一键依次运行全部 15 课，图像自动保存到 docs/images/
+>> run_all_tutorials       % 一键依次运行全部 21 课，图像自动保存到 docs/images/
 ```
 
 脚本会自动创建 Simulink 模型（`.slx`）、运行仿真、生成结果图。
@@ -82,13 +88,25 @@
 
 ```
 t01-t08 基础操作 ──→ t09 状态空间 ──→ t10 LQR 控制
-                                         │
-                    t13 DC电机 ←── t11 观测器 ←── t12 Kalman
+                     │    │               │
+                     │    ├── t11 观测器 ←── t12 Kalman
+                     │    │
+                     ├── t16 频域分析 ──→ t17 校正器设计
+                     │
+                     ├── t18 系统辨识
+                     │
+                     ├── t19 H∞ 鲁棒控制
+                     │
+                     ├── t20 MPC 模型预测控制
+                     │
+                     └── t21 滑模控制 (SMC)
                          │
-                    t14 PMSM/FOC ←── t15 代码生成 → 嵌入式部署
+         ┌───────────────┘
+         ↓
+    t13 DC电机 ←── t14 PMSM/FOC ←── t15 代码生成 → 嵌入式部署
 ```
 
-15 个教程学完，能做到：
+21 个教程学完，能做到：
 - 从物理定律推导状态空间模型
 - 设计 LQR/Kalman 最优控制器和观测器
 - 连续→离散→C 代码，部署到 STM32
