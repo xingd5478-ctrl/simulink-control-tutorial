@@ -176,25 +176,30 @@ grid on;
 %% ===== 第 6 步：鲁棒稳定性验证 =====
 
 figure('Name', 't19: 鲁棒稳定性分析', ...
-    'Position', [50, 50, 700, 350]);
+    'Position', [50, 50, 700, 500]);
 
-subplot(1,2,1); hold on;
-% 名义系统 + 极端参数系统的 Bode 图对比
-bode(G_nom, 'b', {0.1, 100});
+% 上图：Bode 幅频对比
+subplot(2,1,1);
 Gi_min = usubs(G_unc, 'm', 0.8, 'c', 0.4, 'k', 8.0);
 Gi_max = usubs(G_unc, 'm', 1.2, 'c', 0.6, 'k', 12.0);
-bode(Gi_min, 'r--', Gi_max, 'g--', {0.1, 100});
-legend('名义', 'min参数', 'max参数', 'Location', 'best');
-title('参数波动下的 Bode 图对比');
-grid on;
+[mag_nom, ~, w_nom] = bode(G_nom, {0.1, 100});
+[mag_min, ~, w_min] = bode(Gi_min, {0.1, 100});
+[mag_max, ~, w_max] = bode(Gi_max, {0.1, 100});
+loglog(w_nom, squeeze(mag_nom), 'b', 'LineWidth', 1.5); hold on;
+loglog(w_min, squeeze(mag_min), 'r--', 'LineWidth', 1.2);
+loglog(w_max, squeeze(mag_max), 'g--', 'LineWidth', 1.2);
+hold off;
+legend('名义', 'min 参数', 'max 参数', 'Location', 'southwest');
+title('参数波动下的幅频特性对比');
+xlabel('频率 (rad/s)'); ylabel('幅值'); grid on;
 
-subplot(1,2,2);
+% 下图：鲁棒稳定裕度
+subplot(2,1,2);
 try
     [stabmarg, ~] = robstab(G_unc);
-    % 简单可视化：稳定裕度条形图
-    bar(1, stabmarg.LowerBound);
+    bar(1, stabmarg.LowerBound, 'FaceColor', [0.2 0.6 0.8]);
     hold on; yline(1, 'r--', 'LineWidth', 1.5);
-    text(1, stabmarg.LowerBound/2, sprintf('%.2f×', stabmarg.LowerBound), ...
+    text(1, stabmarg.LowerBound * 0.5, sprintf('%.2f×', stabmarg.LowerBound), ...
         'HorizontalAlignment', 'center', 'FontSize', 14, 'FontWeight', 'bold');
     hold off;
     set(gca, 'XTickLabel', {'鲁棒稳定裕度'});
@@ -203,8 +208,11 @@ try
     fprintf('  鲁棒稳定裕度 = %.2f (参数可波动 %.0f%%)\n', ...
         stabmarg.LowerBound, stabmarg.LowerBound*100);
 catch
-    text(0.5, 0.5, 'robstab 不可用', 'HorizontalAlignment', 'center');
-    title('鲁棒稳定性');
+    bar(1, 0, 'FaceColor', [0.8 0.8 0.8]);
+    text(1, 0.5, 'robstab 不可用', 'HorizontalAlignment', 'center', 'FontSize', 12);
+    set(gca, 'XTickLabel', {'鲁棒稳定裕度'});
+    ylim([0, 2]); grid on;
+    title('鲁棒稳定性 (robstab 不可用)');
 end
 
 fprintf('\n========================================\n');
