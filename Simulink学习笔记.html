@@ -5,50 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulink 控制工程教程 · 21 课学习笔记</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
     background: linear-gradient(135deg, #fce4ec 0%, #e8eaf6 50%, #e0f7fa 100%);
-    min-height: 100vh;
-    padding: 20px;
+    min-height: 100vh; padding: 20px; line-height: 1.8;
   }
 
-  .container { max-width: 960px; margin: 0 auto; }
+  .container { max-width: 1000px; margin: 0 auto; }
 
   .hero {
     background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe);
     background-size: 300% 300%;
     animation: gradient 8s ease infinite;
-    border-radius: 30px;
-    padding: 40px 30px;
-    text-align: center;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    border-radius: 30px; padding: 50px 30px; text-align: center;
+    margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   }
   @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  .hero h1 {
-    font-size: 2.2em;
-    color: #fff;
-    text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
-  }
+  .hero h1 { font-size: 2.4em; color: #fff; text-shadow: 3px 3px 0 rgba(0,0,0,0.15); }
   .hero .subtitle { font-size: 1.1em; color: rgba(255,255,255,0.9); margin-top: 8px; }
   .hero .meta { font-size: 0.9em; color: rgba(255,255,255,0.75); margin-top: 12px; }
   .hero .meta a { color: #fff; text-decoration: underline; }
 
+  /* Table of Contents */
+  .toc {
+    background: #fff; border-radius: 20px; padding: 24px 30px;
+    margin-bottom: 30px; box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  }
+  .toc h2 { font-size: 1.2em; margin-bottom: 12px; color: #333; }
+  .toc ol { padding-left: 20px; columns: 2; }
+  .toc li { margin: 4px 0; font-size: 0.9em; }
+  .toc a { color: #667eea; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Phase header */
   .phase-title {
-    background: #fff;
-    border-radius: 16px;
-    padding: 14px 24px;
-    margin: 30px 0 16px;
-    font-weight: bold;
-    font-size: 1.15em;
+    background: #fff; border-radius: 16px; padding: 16px 24px;
+    margin: 36px 0 18px; font-weight: bold; font-size: 1.15em;
     box-shadow: 0 4px 16px rgba(0,0,0,0.05);
     display: flex; align-items: center; gap: 10px;
   }
@@ -57,46 +57,74 @@
   .phase-title .dot.p2 { background: #667eea; }
   .phase-title .dot.p3 { background: #00b894; }
 
+  /* Lesson cards */
   .card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 22px 26px;
-    margin-bottom: 14px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
-    border-left: 5px solid #ddd;
-    transition: transform 0.15s, box-shadow 0.15s;
+    background: #fff; border-radius: 20px; padding: 28px 30px;
+    margin-bottom: 16px; box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+    border-left: 5px solid #ddd; transition: transform 0.15s, box-shadow 0.15s;
   }
   .card:hover { transform: translateX(4px); box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
-
-  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .card-header .icon { font-size: 1.6em; }
-  .card-header h3 { font-size: 1.05em; color: #333; }
-  .card-header .tag { font-size: 0.7em; color: #999; background:#f5f5f5; padding:2px 10px; border-radius:10px; }
-  .card p { line-height: 1.7; color: #555; font-size: 0.92em; }
-
   .card.p1 { border-left-color: #ff6b6b; }
   .card.p2 { border-left-color: #667eea; }
   .card.p3 { border-left-color: #00b894; }
 
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .card-header .num {
+    width: 36px; height: 36px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-weight: bold;
+    font-size: 0.9em; color: #fff; flex-shrink: 0;
+  }
+  .card.p1 .num { background: #ff6b6b; }
+  .card.p2 .num { background: #667eea; }
+  .card.p3 .num { background: #00b894; }
+  .card-header h3 { font-size: 1.1em; color: #222; }
+  .card-header .tag { font-size: 0.7em; color: #999; background:#f5f5f5; padding:2px 10px; border-radius:10px; }
+
+  .card h4 { font-size: 0.95em; color: #444; margin: 14px 0 6px; }
+  .card h4::before { content: '▸ '; color: #667eea; }
+  .card p { color: #555; font-size: 0.92em; margin-bottom: 8px; }
+  .card ul { padding-left: 20px; margin: 6px 0 12px; font-size: 0.9em; color: #555; }
+  .card ul li { margin: 4px 0; }
+
+  /* Code block */
   .highlight-box {
-    background: #f8f9fa; border-left: 4px solid #667eea;
-    border-radius: 0 10px 10px 0; padding: 12px 16px;
-    margin: 10px 0; font-family: 'Consolas','Courier New',monospace;
-    font-size: 0.85em; color: #444; white-space: pre-wrap;
+    background: #1e1e2e; color: #cdd6f4; border-radius: 10px;
+    padding: 14px 18px; margin: 10px 0; font-family: 'Consolas','Courier New',monospace;
+    font-size: 0.82em; white-space: pre-wrap; overflow-x: auto;
   }
+  /* Inline code */
+  code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 0.88em; color: #c7254e; }
+  .highlight-box code { background: transparent; color: #a6e3a1; padding: 0; }
+
+  /* Tip box */
   .tip {
-    background: #fff9e6; border-radius: 10px; padding: 10px 14px;
-    margin: 8px 0; font-size: 0.88em; color: #b8860b;
+    background: #fff9e6; border-radius: 10px; padding: 12px 16px;
+    margin: 10px 0; font-size: 0.88em; color: #8b6914;
+    border-left: 3px solid #f0c040;
   }
-  .footer {
-    text-align: center; padding: 30px; color: #aaa; font-size: 0.85em;
-    margin-top: 20px;
+  .analogy {
+    background: #f0f4ff; border-radius: 10px; padding: 12px 16px;
+    margin: 10px 0; font-size: 0.88em; color: #445588;
+    border-left: 3px solid #667eea;
   }
+  .formula {
+    background: #f5f5f5; border-radius: 8px; padding: 10px 16px;
+    margin: 8px 0; font-size: 0.9em; text-align: center;
+    font-family: 'Consolas','Courier New',monospace; color: #333;
+  }
+  .keypoint {
+    background: #e8f5e9; border-radius: 10px; padding: 12px 16px;
+    margin: 10px 0; font-size: 0.88em; color: #2e7d32;
+    border-left: 3px solid #4caf50;
+  }
+
+  .footer { text-align: center; padding: 40px 20px; color: #aaa; font-size: 0.85em; }
   .footer a { color: #667eea; }
 
   @media (max-width: 600px) {
     .hero h1 { font-size: 1.4em; }
-    .card { padding: 14px; }
+    .card { padding: 16px; }
+    .toc ol { columns: 1; }
   }
 </style>
 </head>
@@ -106,7 +134,7 @@
 
   <div class="hero">
     <h1>Simulink 控制工程教程</h1>
-    <div class="subtitle">从零基础到嵌入式代码部署 — 21 课系统学习</div>
+    <div class="subtitle">从零基础到嵌入式代码部署 — 21 课系统学习笔记</div>
     <div class="meta">
       2026年7月17日 ·
       <a href="https://github.com/xingd5478-ctrl/simulink-control-tutorial" target="_blank">GitHub 仓库</a> ·
@@ -114,133 +142,638 @@
     </div>
   </div>
 
-  <!-- ===== Phase 1 ===== -->
-  <div class="phase-title"><span class="dot p1"></span> Phase 1 · Simulink 基础（t01-t08）</div>
+  <!-- ===== 目录 ===== -->
+  <div class="toc">
+    <h2>目录</h2>
+    <ol>
+      <li><a href="#s1">什么是 Simulink？为什么学它？</a></li>
+      <li><a href="#s2">t01 信号基础 — 搭建第一个模型</a></li>
+      <li><a href="#s3">t02 数学运算 — 加减乘除与信号路由</a></li>
+      <li><a href="#s4">t03 一阶系统 — 时间常数与惯性</a></li>
+      <li><a href="#s5">t04 二阶系统 — 阻尼、振荡与超调</a></li>
+      <li><a href="#s6">t05 PID 控制 — 工控万金油</a></li>
+      <li><a href="#s7">t06 信号导入导出 — 打通数据流</a></li>
+      <li><a href="#s8">t07 子系统 — 模型的层次化设计</a></li>
+      <li><a href="#s9">t08 Mask 封装 — 让模块可复用</a></li>
+      <li><a href="#s10">t09 状态空间 — 现代控制的大门</a></li>
+      <li><a href="#s11">t10 LQR — 最优控制</a></li>
+      <li><a href="#s12">t11 状态观测器 — 看不见的状态怎么估计</a></li>
+      <li><a href="#s13">t12 Kalman 滤波 — 噪声中的最优估计</a></li>
+      <li><a href="#s14">t13 DC 电机 — 执行器建模实战</a></li>
+      <li><a href="#s15">t14 PMSM/FOC — 无刷电机矢量控制</a></li>
+      <li><a href="#s16">t15 代码生成 — 从仿真到嵌入式</a></li>
+      <li><a href="#s17">t16 频域分析 — Bode/Nyquist</a></li>
+      <li><a href="#s18">t17 校正器 — Lead-Lag 设计</a></li>
+      <li><a href="#s19">t18 系统辨识 — 数据到模型</a></li>
+      <li><a href="#s20">t19 H∞ 鲁棒控制 — 对抗不确定性</a></li>
+      <li><a href="#s21">t20 MPC — 模型预测控制</a></li>
+      <li><a href="#s22">t21 滑模控制 — 非线性鲁棒</a></li>
+      <li><a href="#s23">学习路径与建议</a></li>
+    </ol>
+  </div>
 
+  <!-- ===== 引言 ===== -->
+  <div class="card" style="border-left-color:#ff6b6b;">
+    <div class="card-header"><h3 id="s1">第〇课：什么是 Simulink？为什么要学？</h3></div>
+
+    <h4>一句话解释</h4>
+    <p>Simulink 是 MATLAB 的"图形化编程"插件。你不用写代码，而是<strong>拖拽方块、连线</strong>就能搭建一个动态系统模型，然后点"运行"看它怎么动。</p>
+
+    <div class="analogy">
+      <strong>类比：</strong>如果 MATLAB 是计算器 + 编程语言，那 Simulink 就是<strong>电子版的乐高积木</strong>。
+      你从工具箱里拿出"正弦波发生器"、"加法器"、"示波器"这些积木块，
+      用线把它们连起来，就搭好了一个信号处理流水线。点运行，示波器上就能看到波形。
+    </div>
+
+    <h4>为什么控制工程师必须学 Simulink？</h4>
+    <ul>
+      <li><strong>直观：</strong>画图比写代码容易理解。看一个框图就知道信号怎么流，不用读几百行 C。</li>
+      <li><strong>安全：</strong>在真实电机上试 PID 参数可能烧硬件；在 Simulink 里随便试，不会坏。</li>
+      <li><strong>效率：</strong>Simulink 可以一键生成 C 代码部署到 STM32 单片机——这就是"基于模型的设计(MBD)"。</li>
+      <li><strong>工业标配：</strong>特斯拉、大疆、西门子……所有做控制的公司都在用 Simulink。</li>
+    </ul>
+
+    <h4>这套教程适合谁？</h4>
+    <ul>
+      <li>学过一点 MATLAB 基础（会定义变量、画 plot 就行）</li>
+      <li>对控制工程感兴趣，但没系统学过</li>
+      <li>想从"能跑就行"进阶到"知道为什么这样跑"</li>
+    </ul>
+
+    <div class="tip">
+      <strong>学习建议：</strong>不要光看！打开 MATLAB，把每个 <code>tXX_xxx.m</code> 脚本跑一遍。
+      改改参数，看看图怎么变。控制工程是"做"会的，不是"看"会的。
+    </div>
+  </div>
+
+  <!-- ==================== Phase 1 ==================== -->
+  <div class="phase-title"><span class="dot p1"></span> Phase 1 · Simulink 基础 — 学会走路（t01-t08）</div>
+
+  <!-- t01 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">🔌</span><h3>t01 · 信号基础</h3><span class="tag">t01_signal_basics</span></div>
-    <p>认识 Simulink 三大基本要素：模块 Block、信号线 Signal、仿真运行 Simulation。搭建第一个信号流：Sine Wave → Gain → Scope。</p>
-    <div class="highlight-box">add_block('simulink/Sources/Sine Wave', ...)   % 拖模块
-add_line(mdl, 'Sine Wave/1', 'Gain/1')          % 连线
-set_param(..., 'Amplitude', '3')                % 改参数
-sim(mdl)                                         % 运行</div>
-    <div class="tip">💡 模块 = 乐高积木，连线 = 流水管，仿真 = 打开水龙头。</div>
+    <div class="card-header"><span class="num">01</span><h3 id="s2">信号基础 — 认识模块、信号线、仿真</h3><span class="tag">t01_signal_basics.m</span></div>
+
+    <h4>这课在干什么？</h4>
+    <p>搭建你人生中第一个 Simulink 模型：正弦波发生器 → 增益放大器 → 示波器。理解 Simulink 最核心的三个概念：<strong>模块(Block)、信号线(Signal Line)、仿真(Simulation)</strong>。</p>
+
+    <h4>核心概念拆解</h4>
+    <p><strong>1. 模块 (Block)</strong> — Simulink 的一切都是模块。信号源（Sine Wave）、数学运算（Gain）、输出显示（Scope），每个模块有输入端口和输出端口，像一个有进水口和出水口的水箱。</p>
+    <p><strong>2. 信号线 (Signal Line)</strong> — 两个模块之间的箭头连线，代表"数据从 A 流向 B"。在 Simulink 中信号是有方向的，只能从输出口（>）流到输入口（<）。</p>
+    <p><strong>3. 仿真 (Simulation)</strong> — 按下绿色三角按钮或执行 <code>sim(mdl)</code>，MATLAB 就开始解微分方程，一步步算出每个时间点的信号值。你可以把仿真理解为"快进播放"——0.1 秒内算出系统 10 秒后的状态。</p>
+
+    <h4>代码是怎么自动搭模型的？</h4>
+    <p>教程中的 <code>.m</code> 脚本用三行核心命令自动搭模型，不需要你手动拖拽：</p>
+    <div class="highlight-box"><code>add_block</code>('simulink/Sources/Sine Wave', [mdl '/Sine1'])   <em>← 放一个正弦波模块</em>
+<code>add_line</code>(mdl, 'Sine1/1', 'Gain/1')                      <em>← 用线连接两个模块</em>
+<code>set_param</code>([mdl '/Gain'], 'Gain', '3')                  <em>← 设置增益值为 3</em>
+<code>sim</code>(mdl)                                                <em>← 运行仿真</em></div>
+
+    <h4>动手实验</h4>
+    <ul>
+      <li>把 Gain 从 3 改成 10，看 Scope 波形幅值变大 10 倍</li>
+      <li>把 Sine Wave 的频率从 1 改成 5，看波形变密</li>
+      <li>双击 Scope 模块，用工具栏放大/缩小波形</li>
+    </ul>
+
+    <div class="keypoint">
+      <strong>记住：</strong>Simulink 模型 = 模块 + 连线。模块做计算，连线传数据。仿真就是让这个"流水线"运转起来。
+    </div>
   </div>
 
+  <!-- t02 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">🧮</span><h3>t02 · 数学运算与信号路由</h3><span class="tag">t02_math_blocks</span></div>
-    <p>Sum 加减、Product 乘除、Mux/Demux 信号捆绑与拆分。两列正弦波相加 = 叠加原理（傅里叶思想）。</p>
+    <div class="card-header"><span class="num">02</span><h3 id="s3">数学运算与信号路由 — Sum、Product、Mux、Demux</h3><span class="tag">t02_math_blocks.m</span></div>
+
+    <h4>这课在干什么？</h4>
+    <p>学四个最常用的运算和路由模块：<strong>加法器(Sum)、乘法器(Product)、信号合并(Mux)、信号拆分(Demux)</strong>。用两列不同频率的正弦波叠加，直观感受"信号的代数运算"。</p>
+
+    <h4>逐个模块讲清楚</h4>
+    <p><strong>Sum（加法器）</strong> — 把多个输入信号加在一起。可以设置每个输入端口的符号（+ 或 -），图标上会显示 <code>|++</code> 表示两个正输入。比如你要做 PID 控制，就需要一个 Sum 把 P、I、D 三项输出加起来。</p>
+    <p><strong>Product（乘法器）</strong> — 把多个输入信号乘在一起。注意：Sum 和 Product 看起来差不多（都是圆形），但功能完全不同。乘法在控制里很常见（增益本质上就是乘法）。</p>
+    <p><strong>Mux（多路复用器）</strong> — 把多根独立的信号线"绑成"一根粗线（向量信号）。比如你有位移、速度、加速度三路信号，用 Mux 绑在一起，一根线传给 Scope 的三个端口。</p>
+    <p><strong>Demux（多路分解器）</strong> — Mux 的逆操作。把一根向量信号线"拆开"成多根独立线。Mux 和 Demux 配对使用，就像把几根电线捆成一根电缆传输，到目的地再拆开。</p>
+
+    <div class="analogy">
+      <strong>类比：</strong>Mux = 把三杯不同的饮料倒进一根三腔吸管里（每腔独立），Demux = 吸管另一端又把三腔拆回三个杯子。信号在传输过程中没混在一起。
+    </div>
+
+    <div class="tip">
+      <strong>常见错误：</strong>新手容易把 Mux 和 Sum 搞混。Mux 只改变信号的<strong>组织形式</strong>（打包/拆包），不改变信号的值。Sum 会真正做<strong>加法运算</strong>改变信号值。
+    </div>
   </div>
 
+  <!-- t03 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">☕</span><h3>t03 · 一阶系统与传递函数</h3><span class="tag">t03_first_order_sys</span></div>
-    <p>理解系统动态特性：G(s) = K/(τs+1)。K = 稳态增益，τ = 时间常数（惯性）。比较 τ=0.5/2/5 对阶跃的响应。</p>
-    <div class="tip">🫖 一杯热水降温——水温不会瞬间降到室温，而是慢慢逼近。τ 越小 = 杯子越小散热越快。</div>
+    <div class="card-header"><span class="num">03</span><h3 id="s4">一阶系统 — 传递函数与时间常数</h3><span class="tag">t03_first_order_sys.m</span></div>
+
+    <h4>什么是"一阶系统"？</h4>
+    <p>含有一个储能元件的系统。比如一杯热水降温（热能存储）、一个 RC 电路充电（电能存储）。它的数学模型是：</p>
+    <div class="formula">G(s) = K / (τs + 1)</div>
+    <p>其中 <strong>K</strong> 是稳态增益（输入 1 最终输出几），<strong>τ</strong> 是时间常数（系统"惯性"有多大的度量）。</p>
+
+    <h4>时间常数 τ：控制工程的第一个重要概念</h4>
+    <p>给系统一个阶跃输入（突然从 0 跳到 1），输出不会瞬间跟上——它会"慢慢爬"到稳态值。τ 的意义是：<strong>经过 τ 秒，输出达到稳态值的 63.2%</strong>。再过 τ 秒，达到 86.5%。再过 τ，达到 95%。</p>
+
+    <div class="analogy">
+      <strong>生活类比：</strong>你往一杯热水里加冰块——水温不会瞬间变凉，而是慢慢逼近室温。
+      τ=0.5 相当于小杯子（散热快，凉得快），τ=5 相当于大暖瓶（散热慢，凉得慢）。
+      控制系统里 τ 越小 = 响应越快 = 越难控制（惯性小，容易抖）。
+    </div>
+
+    <h4>这课演示了什么？</h4>
+    <p>用 Simulink 的 <code>Transfer Fcn</code> 模块创建三个不同 τ（0.5、2、5）的一阶系统，同时输入阶跃信号，对比它们的响应速度。你会直观看到：τ 越小线条越陡（响应快），τ 越大线条越平（响应慢）。</p>
+
+    <div class="keypoint">
+      <strong>核心结论：</strong>τ 是系统"惰性"的标尺。控制器的任务就是"克服惰性"让系统按你的意愿运动——但惰性越大越费劲。
+    </div>
   </div>
 
+  <!-- t04 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">🎢</span><h3>t04 · 二阶系统与阻尼特性</h3><span class="tag">t04_second_order_sys</span></div>
-    <p>G(s) = ωn²/(s² + 2ζωns + ωn²)。ζ 阻尼比决定振荡行为：ζ=0 纯振荡、0&lt;ζ&lt;1 衰减振荡、ζ=1 临界阻尼、ζ&gt;1 过阻尼。</p>
-    <div class="tip">🔗 ζ 太小 → 超调严重 → 需要 PID 的 D 参数来 "增加阻尼"，这就是 t04 是 t05 前置的原因。</div>
+    <div class="card-header"><span class="num">04</span><h3 id="s5">二阶系统 — 阻尼比、超调量与振荡</h3><span class="tag">t04_second_order_sys.m</span></div>
+
+    <h4>什么是"二阶系统"？</h4>
+    <p>含有两个储能元件的系统。比如质量-弹簧-阻尼器（动能 + 弹性势能）、RLC 电路（电场能 + 磁场能）。二阶系统最有趣的地方是<strong>它会振荡</strong>。</p>
+    <div class="formula">G(s) = ω<sub>n</sub>² / (s² + 2ζω<sub>n</sub>s + ω<sub>n</sub>²)</div>
+
+    <h4>三个关键参数</h4>
+    <ul>
+      <li><strong>ω<sub>n</sub>（自然频率）：</strong>系统"喜欢"以多快的频率振荡。单位 rad/s。</li>
+      <li><strong>ζ（阻尼比）：</strong>振荡衰减的快慢。这是最重要的参数！</li>
+      <li><strong>超调量：</strong>输出超过目标的最大百分比。ζ 越小超调越大。</li>
+    </ul>
+
+    <h4>阻尼比 ζ 的四个区间——这课的核心</h4>
+    <p><strong>ζ = 0（无阻尼）：</strong>纯振荡，永不衰减。现实中不存在（总有摩擦），但理论上很重要。</p>
+    <p><strong>0 &lt; ζ &lt; 1（欠阻尼）：</strong>会振荡但逐渐衰减。这是最常见的情况（汽车的悬挂、机器人的关节）。ζ = 0.2 时超调约 50%，ζ = 0.7 时超调约 5%——工程上一般取 ζ=0.7 作为"最优"。</p>
+    <p><strong>ζ = 1（临界阻尼）：</strong>刚好不振荡，且上升最快。理论上的"最优"——既没有超调的烦恼，也不像过阻尼那么慢。</p>
+    <p><strong>ζ &gt; 1（过阻尼）：</strong>完全不振，但上升很慢。就像把弹簧泡在蜂蜜里——安全但迟钝。</p>
+
+    <div class="analogy">
+      <strong>生活类比：</strong>你推一下秋千——它会来回摆（ζ≈0 无阻尼）。
+      如果秋千浸在水里——摆动几次就停了（ζ&lt;1 欠阻尼）。
+      如果秋千浸在胶水里——推出去后缓慢回到原位，完全不摆（ζ&gt;1 过阻尼）。
+      PID 控制器的 D 参数本质上就是"人为增加阻尼"。
+    </div>
+
+    <div class="tip">
+      <strong>t04 为什么在 t05 之前？</strong>因为 PID 控制的 D 参数就是在"加阻尼"。
+      不理解阻尼，就不会理解为什么要加 D、加多少 D。
+    </div>
   </div>
 
+  <!-- t05 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">🎯</span><h3>t05 · PID 反馈控制</h3><span class="tag">t05_pid_control</span></div>
-    <p>经典控制核心：u(t) = Kp·e + Ki·∫e + Kd·de/dt。P 有误差立刻反应、I 累积消除残余、D 预测抑制超调。分别验证 P/I/D 单独作用 + 联合闭环调参。</p>
+    <div class="card-header"><span class="num">05</span><h3 id="s6">PID 控制 — 工业控制的万金油</h3><span class="tag">t05_pid_control.m</span></div>
+
+    <h4>PID 是什么？</h4>
+    <p>PID 是 <strong>P</strong>roportional（比例）、<strong>I</strong>ntegral（积分）、<strong>D</strong>erivative（微分）的缩写。它是工业界使用最广泛的控制算法——估计 90% 以上的工业控制回路用的都是 PID。不是因为它"最优"，而是因为<strong>简单、好调、够用</strong>。</p>
+
+    <div class="formula">u(t) = K<sub>p</sub>·e(t) + K<sub>i</sub>·∫e(t)dt + K<sub>d</sub>·de(t)/dt</div>
+    <p>其中 e(t) = 目标值 - 实际值 = "误差"。控制量 u 是三项的加权和。</p>
+
+    <h4>三个参数各自的作用——逐个理解</h4>
+    <p><strong>P（比例）："现在有误差，立刻反应"</strong> — 误差大就给大力，误差小就给小力。P 越大反应越快，但太大系统会振荡甚至不稳定。只用 P 控制会有一个"稳态误差"（最终稳定值和目标值差一点点，因为当误差很小时 u=Kp·e 也很小，推不动系统了）。</p>
+    <p><strong>I（积分）："累积误差，持续发力"</strong> — 把历史上的误差全部加起来。即使当前误差很小，只要历史上误差一直存在，积分项就会持续增大控制量，<strong>直到误差完全消除</strong>。这就是为什么需要 I——消除 P 无法消除的稳态误差。但 I 太大容易引起超调和振荡。</p>
+    <p><strong>D（微分）："误差在变大，提前刹车"</strong> — 看误差的变化率。如果误差在快速增大（说明系统在冲过头），D 项产生一个"制动力"来抑制趋势。D 就是"增加阻尼"——减小超调，让系统更平稳。但 D 对噪声特别敏感（噪声的导数很大）。</p>
+
+    <div class="analogy">
+      <strong>开车类比：</strong>你要把车停到车位。<br>
+      P = 看离车位还有多远，远就踩油门，近就松油门。<br>
+      I = 如果车停了但离车位还差 10cm，你会一点一点往前蹭（累积的"没到位感"）。<br>
+      D = 如果车速太快冲向车位，你会提前踩刹车防止冲过头。<br>
+      纯 P 会在车位附近来回晃，P+D 会平稳停住但可能差一点，P+I+D 完美到位。
+    </div>
+
+    <h4>调参口诀</h4>
+    <ul>
+      <li>先调 P：从小到大，直到响应够快但刚开始振荡</li>
+      <li>再加 D：抑制 P 引起的振荡和超调</li>
+      <li>最后加 I：消除残余的稳态误差</li>
+      <li>P 太大→振荡，I 太大→超调+慢，D 太大→对噪声敏感+控制信号抖动</li>
+    </ul>
+
+    <div class="keypoint">
+      <strong>理解 PID 就理解了 90% 的工业控制。</strong>后面的 LQR、MPC、H∞ 等"高级"方法都是在特定场景（多变量、有约束、有不确定性）下替代 PID 的。但 PID 永远是你最先尝试的方案。
+    </div>
   </div>
 
+  <!-- t06 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">📂</span><h3>t06 · 信号导入导出</h3><span class="tag">t06_sources_and_sinks</span></div>
-    <p>打通 MATLAB ↔ Simulink 数据交换：From Workspace (进口)、To Workspace/To File (出口)、Display/Scope (监视)。学完这课就能把仿真结果拿到 MATLAB 做 FFT、统计等后处理。</p>
+    <div class="card-header"><span class="num">06</span><h3 id="s7">信号导入导出 — 打通 MATLAB ⇄ Simulink 数据流</h3><span class="tag">t06_sources_and_sinks.m</span></div>
+
+    <h4>为什么需要数据导入导出？</h4>
+    <p>前面几课的数据都只存在于 Simulink 内部（Scope 里看看）。但实际工作中你需要：把 MATLAB 里算好的数据喂给 Simulink 当输入 → 把仿真结果拿出来在 MATLAB 里做分析（FFT、统计、画图）。<strong>From Workspace / To Workspace 就是 Simulink 的"进出口海关"。</strong></p>
+
+    <h4>三个关键模块</h4>
+    <p><strong>From Workspace（数据进口）</strong> — 允许你把 MATLAB 工作区里的变量作为 Simulink 的输入信号。比如你从实验记录了真实的传感器数据，想喂给控制器模型仿真——就用这个模块。数据格式要求是 <code>[时间向量, 数据向量]</code>。</p>
+    <p><strong>To Workspace（数据出口）</strong> — 把仿真结果保存到 MATLAB 工作区。仿真结束后，你可以在命令行访问这些变量，画图、做统计分析。这个是本教程批量生成图片的关键模块。</p>
+    <p><strong>To File（保存到文件）</strong> — 把数据保存为 <code>.mat</code> 文件。适合长时间仿真（不想占用内存）。</p>
+
+    <div class="analogy">
+      <strong>类比：</strong>Simulink 是一个"仿真工厂"。From Workspace = 原材料进口，
+      To Workspace = 成品出口，Scope = 厂里的监控屏幕。数据流 = 原料 → 加工（你的模型）→ 成品。
+    </div>
   </div>
 
+  <!-- t07 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">📦</span><h3>t07 · 子系统封装</h3><span class="tag">t07_subsystem</span></div>
-    <p>将复杂模型折叠成黑盒子——理解层次化建模思想。把 PID+Plant 整个闭环压成一个 Subsystem，输入=设定值，输出=实际值。</p>
+    <div class="card-header"><span class="num">07</span><h3 id="s8">子系统封装 — 模型的层次化设计</h3><span class="tag">t07_subsystem.m</span></div>
+
+    <h4>问题：如果模型有 100 个模块，你怎么看得过来？</h4>
+    <p>答案：<strong>把一组相关的模块"打包"成一个盒子，对外只露出输入输出端口。</strong>这就是子系统（Subsystem）。它就像编程里的"函数"——调用者不需要知道内部怎么实现的。</p>
+
+    <h4>层次化设计的三层结构（t07 演示的）</h4>
+    <p><strong>顶层（最外面）：</strong>只有信号源 + 子系统盒子 + 示波器。极简！任何人都能看懂信号从哪来到哪去。</p>
+    <p><strong>第二层（Signal_Processor 内部）：</strong>Gain（增益=3）+ Transfer Fcn（一阶滤波 τ=0.5）。双击盒子就能钻进去看细节。</p>
+    <p><strong>第三层（Nested_Demo → Inner_Sub 内部）：</strong>再嵌套一层子系统，里面只有一个 Gain=4。这演示了<strong>子系统可以无限嵌套</strong>——就像代码里的函数可以调用函数。</p>
+
+    <div class="analogy">
+      <strong>编程类比：</strong>顶层 = main() 函数（几行代码，概括全局）。<br>
+      子系统 = 子函数（封装一个功能模块）。<br>
+      嵌套子系统 = 子函数调用子子函数（递归封装）。<br>
+      你不需要读懂 1000 行代码——你只需要知道每个函数的"输入是什么、输出是什么"。
+    </div>
+
+    <div class="keypoint">
+      <strong>层次化是控制工程师的基本素养。</strong>一个电机控制系统可能有几百个模块——如果全部平铺在一个画布上，没有人能维护。
+      好的模型应该像洋葱：外层简洁，每剥一层看到更多细节。
+    </div>
   </div>
 
+  <!-- t08 -->
   <div class="card p1">
-    <div class="card-header"><span class="icon">🎛️</span><h3>t08 · Mask 参数化封装</h3><span class="tag">t08_masking</span></div>
-    <p>自定义参数对话框，让子系统可复用、可配置。双击弹出参数窗口，输入 Kp/Ki/Kd 即可——不用每次打开子系统内部。</p>
+    <div class="card-header"><span class="num">08</span><h3 id="s9">Mask 参数化封装 — 让模块可配置、可复用</h3><span class="tag">t08_masking.m</span></div>
+
+    <h4>子系统 vs Mask 的区别</h4>
+    <p>子系统只是"视觉折叠"，双击还是进入内部。Mask 是"参数拦截"——<strong>双击弹出一个对话框让你填参数，不用进入内部</strong>。就像一个 APP 的用户界面：你只需要填参数点确定，不用关心代码怎么写的。</p>
+
+    <h4>Mask 三要素</h4>
+    <ul>
+      <li><strong>Mask 参数（形参）：</strong>在 Mask Editor 里定义的变量，比如 <code>myGain</code>、<code>myTau</code>。这些会出现在双击弹出的对话框里。</li>
+      <li><strong>子系统内部（函数体）：</strong>模块参数引用这些变量名（比如 Gain 的值填 <code>myGain</code> 而不是具体数字）。</li>
+      <li><strong>模块实例（函数调用）：</strong>拖出两个同样的 Mask 模块，一个设 myGain=5，一个设 myGain=10——同一个"函数"被调用了两次，传了不同"实参"。</li>
+    </ul>
+
+    <div class="analogy">
+      <strong>编程类比：</strong>定义函数 <code>amplify(signal, gain, tau)</code> → 这就是 Mask。<br>
+      内部怎么实现的不重要，调用者只需要传 <code>(sig, 5, 0.1)</code> 和 <code>(sig, 10, 2.0)</code> 得到两个不同实例。<br>
+      电机驱动器、传感器模块、控制器的 Simulink 库全都是 Masked Subsystem！
+    </div>
   </div>
 
-  <!-- ===== Phase 2 ===== -->
-  <div class="phase-title"><span class="dot p2"></span> Phase 2 · 控制理论（t09-t12 + t16-t21）</div>
+  <!-- ==================== Phase 2A ==================== -->
+  <div class="phase-title"><span class="dot p2"></span> Phase 2 · 控制理论 — 从经典到现代（t09-t12）</div>
 
+  <!-- t09 -->
   <div class="card p2">
-    <div class="card-header"><span class="icon">📐</span><h3>t09 · 状态空间模型</h3><span class="tag">t09_state_space</span></div>
-    <p>现代控制理论基础：ẋ=Ax+Bu, y=Cx+Du。从传递函数到状态空间，理解"状态"的物理意义，能控性/能观性。</p>
+    <div class="card-header"><span class="num">09</span><h3 id="s10">状态空间模型 — 现代控制理论的大门</h3><span class="tag">t09_state_space.m</span></div>
+
+    <h4>传递函数 vs 状态空间</h4>
+    <p><strong>传递函数（t03-t04）：</strong>只关心"输入→输出"的关系。就像你只关心一个黑盒子的输入输出数据，不关心里面发生了什么。适合简单系统。</p>
+    <p><strong>状态空间：</strong>把盒子拆开，看<strong>内部所有变量的流动</strong>。你不仅知道输出是什么，还知道系统"内部正在发生什么"。适合复杂系统（多输入多输出、有内部约束）。</p>
+
+    <div class="formula">ẋ = Ax + Bu  （状态方程：状态的"变化速度"由当前状态和输入决定）
+y = Cx + Du （输出方程：我们能测量到的东西由状态决定）</div>
+
+    <h4>"状态"到底是什么？</h4>
+    <p>状态就是"能完全描述系统当前情况的最少一组变量"。对于质量-弹簧-阻尼系统：两个状态就够了——位移和速度。知道这两个值，你就能预测系统下一秒在哪。</p>
+
+    <div class="analogy">
+      <strong>状态 = 游戏存档。</strong>你玩 RPG 时，"存档"记录了角色的位置、血量、经验值、装备……
+      这些就是"状态变量"。有了存档，你就能在任何时候恢复游戏状态。
+      状态空间模型的 A 矩阵就是"游戏规则"——描述状态如何演变。
+    </div>
+
+    <h4>能控性 & 能观性</h4>
+    <p><strong>能控性：</strong>能不能通过输入 u 把系统从任意初态驱动到任意终态？数学上检查 <code>rank(ctrb(A,B)) == n</code>。不能控的系统就像一辆只能左转不能右转的车——你到不了任何想去的地方。</p>
+    <p><strong>能观性：</strong>能不能通过测量输出 y 反推出全部状态？数学上检查 <code>rank(obsv(A,C)) == n</code>。能观才可以用观测器（t11），不能观就必须加传感器。</p>
+
+    <div class="keypoint">
+      <strong>为什么企业级应用都用状态空间？</strong>因为现实世界的系统有多个状态：<br>
+      无人机 = 位置(3) + 速度(3) + 姿态角(3) + 角速度(3) = 12 个状态<br>
+      机械臂 = 6 个关节 × (角度+角速度) = 12 个状态<br>
+      LQR、Kalman、MPC 都必须建立在状态空间上。
+    </div>
   </div>
 
+  <!-- t10 -->
   <div class="card p2">
-    <div class="card-header"><span class="icon">🎯</span><h3>t10 · LQR 最优控制</h3><span class="tag">t10_state_feedback</span></div>
-    <p>极点配置 → LQR → Riccati 方程。Q/R 权重矩阵调参策略：Q 大=重视性能，R 大=节省能量。多变量系统设计的核心工具。</p>
+    <div class="card-header"><span class="num">10</span><h3 id="s11">LQR 最优控制 — 让数学帮你找最好的 K</h3><span class="tag">t10_state_feedback.m</span></div>
+
+    <h4>状态反馈的基本思路</h4>
+    <p>如果系统不稳定或者响应太慢，怎么办？<strong>测量所有状态，乘上增益 K，反馈回去改变系统的行为。</strong>即 <code>u = -Kx</code>。新的闭环系统变成 <code>ẋ = (A-BK)x</code>——通过选择 K，我们可以把系统的极点（决定了响应速度和振荡特性）放到任何想要的位置。</p>
+
+    <h4>极点配置 vs LQR</h4>
+    <p><strong>极点配置：</strong>"我想要系统以 ζ=0.7 的阻尼、2Hz 的带宽运动"→ 直接指定极点位置 → 反算 K。适合需求明确的场景。</p>
+    <p><strong>LQR（线性二次型调节器）：</strong>"我不确定具体要多快，但我知道位置精度很重要，能耗不那么重要"→ 设权重 Q 和 R → 解 Riccati 方程 → 自动给出"最优"K。适合需求模糊但有偏好的场景。</p>
+
+    <div class="formula">J = ∫ (xᵀQx + uᵀRu) dt   ← LQR 最小化的"代价函数"</div>
+
+    <h4>Q 和 R 怎么调？</h4>
+    <ul>
+      <li><strong>Q 大（重视状态精度）：</strong>K 会变大 → 控制更"猛" → 响应快但费电</li>
+      <li><strong>R 大（重视节能）：</strong>K 会变小 → 控制更"柔" → 省电但响应慢</li>
+      <li><strong>Q/R 的比例</strong>决定性能 vs 节能的平衡点——这就是 LQR 调参的全部</li>
+    </ul>
+
+    <div class="analogy">
+      <strong>开车类比：</strong>极点配置 = "我要 5 秒内到 100km/h，不能超速"（精确指令）。<br>
+      LQR = "我想尽快到但不想费太多油"（有偏好但没具体数字）。<br>
+      实践中 LQR 更常用——大多数时候你说不清"想要多快"，但你知道"位置比速度重要 10 倍"。
+    </div>
   </div>
 
+  <!-- t11 -->
   <div class="card p2">
-    <div class="card-header"><span class="icon">👁️</span><h3>t11 · Luenberger 状态观测器</h3><span class="tag">t11_observer</span></div>
-    <p>当状态不可直接测量时——用观测器"估计"状态。x̂̇ = Ax̂ + Bu + L(y-ŷ)。对偶原理，分离原理验证。</p>
+    <div class="card-header"><span class="num">11</span><h3 id="s12">状态观测器 — 当状态测不到时怎么办</h3><span class="tag">t11_observer.m</span></div>
+
+    <h4>问题：LQR 需要全部状态，但你可能只有一个传感器</h4>
+    <p>比如你只有一个位置传感器（编码器），但 LQR 需要位置+速度两个状态。速度传感器太贵/装不下/不可靠，怎么办？<strong>用数学模型+已知信息"估计"出速度。</strong></p>
+
+    <h4>Luenberger 观测器的原理</h4>
+    <div class="formula">ẋ̂ = Ax̂ + Bu + L(y - ŷ)    ← 观测器方程
+ė = (A - LC)e               ← 估计误差的动态</div>
+    <p>观测器 = <strong>系统模型预测 + 测量误差修正</strong>。它内部跑一个和真实系统一样的模型，然后不停用"模型预测输出 ŷ"和"实际测量 y"的差来修正自己。如果修正力度 L 够大，估计误差 e 就会迅速衰减到零。</p>
+
+    <div class="analogy">
+      <strong>类比：你蒙着眼走路。</strong><br>
+      模型预测 = "我上一秒在(0,0)，速度是 1m/s 往前 → 我现在大概在(1,0)"<br>
+      测量修正 = 手摸到了墙（实际在 0.9m 处）→ 修正估计为 0.95m（信任模型也信任触觉）<br>
+      L 的大小 = 你有多相信触觉——L 大 = 每摸一次墙就大幅修正，L 小 = 更相信自己的步数估计。
+    </div>
+
+    <h4>分离原理 — 最优美的结论之一</h4>
+    <p>控制器 K 和观测器 L 可以<strong>完全独立设计</strong>！整个闭环系统的特征值 = eig(A-BK) ∪ eig(A-LC)。这意味着你可以分开调控制器（让它快）和观测器（让它更快），互不干扰。</p>
   </div>
 
+  <!-- t12 -->
   <div class="card p2">
-    <div class="card-header"><span class="icon">🔮</span><h3>t12 · Kalman 滤波</h3><span class="tag">t12_kalman_filter</span></div>
-    <p>噪声环境下的最优状态估计。过程噪声 Q 与测量噪声 R 建模，lqe() 设计。与 Luenberger 对比：Kalman 在噪声下更优。</p>
+    <div class="card-header"><span class="num">12</span><h3 id="s13">Kalman 滤波 — 噪声世界里的最优观测器</h3><span class="tag">t12_kalman_filter.m</span></div>
+
+    <h4>Luenberger vs Kalman 的根本区别</h4>
+    <p>Luenberger：假设没有噪声，L 靠极点配置（想要多快就设多快）。<br>
+    Kalman：承认有噪声（过程噪声和测量噪声），L 靠统计优化（知道噪声大小后自动算出"最合理的 L"）。</p>
+
+    <h4>Q 和 R 的物理含义</h4>
+    <ul>
+      <li><strong>Q（过程噪声协方差）：</strong>"我不信任我的模型"——模型有误差/有随机扰动。Q 越大，Kalman 越依赖测量值。</li>
+      <li><strong>R（测量噪声协方差）：</strong>"我不信任我的传感器"——传感器有噪声。R 越大，Kalman 越依赖模型预测。</li>
+      <li><strong>Q/R 比例</strong>决定"更信模型还是更信传感器"——Kalman 自动算出最优的 L 来平衡这个 trade-off。</li>
+    </ul>
+
+    <div class="analogy">
+      <strong>Q 和 R 就像一个天平的两端：</strong><br>
+      你的 GPS 很准但 IMU 很烂 → R 小 Q 大 → 信 GPS（测量）<br>
+      你的 IMU 很准但 GPS 有遮挡 → R 大 Q 小 → 信 IMU（模型）<br>
+      Kalman 自动算出最优权重——这就是它为什么叫"最优估计"。
+    </div>
+
+    <div class="tip">
+      <strong>工程实践：</strong>Q 和 R 是 Kalman 滤波最难调的参数。一个技巧：把 R 设为你传感器的实际噪声方差（可以直接从静止数据算出来），然后只调 Q。Q 从小到大试，直到滤波结果既平滑又能跟踪信号变化。
+    </div>
   </div>
 
-  <div class="card p2">
-    <div class="card-header"><span class="icon">📈</span><h3>t16 · 频域分析</h3><span class="tag">t16_freq_domain</span></div>
-    <p>Bode 图 / Nyquist 图 / Nichols 图。增益裕度 GM、相位裕度 PM——频域稳定性判据。不同增益 K 对稳定裕度的影响。</p>
-  </div>
-
-  <div class="card p2">
-    <div class="card-header"><span class="icon">✏️</span><h3>t17 · 超前-滞后校正</h3><span class="tag">t17_lead_lag</span></div>
-    <p>根轨迹法设计 Lead/Lag 补偿器。Lead = 增加相位裕度（改善暂态），Lag = 提高低频增益（改善稳态）。</p>
-  </div>
-
-  <div class="card p2">
-    <div class="card-header"><span class="icon">🔬</span><h3>t18 · 系统辨识</h3><span class="tag">t18_system_id</span></div>
-    <p>从实验数据到数学模型。阶跃响应法提取 K/τ/θ，最小二乘法拟合。模型验证：残差分析、交叉验证。</p>
-  </div>
-
-  <div class="card p2">
-    <div class="card-header"><span class="icon">🛡️</span><h3>t19 · H∞ 鲁棒控制</h3><span class="tag">t19_robust_control</span></div>
-    <p>主动考虑参数不确定性（±20%）。混合灵敏度 S/KS/T 整形 → hinfsyn 求解 → μ 分析。LQR 单一名义模型 vs H∞ 全局鲁棒。</p>
-    <div class="highlight-box">H∞ 设计流程：
-ureal('m',1.0,'±20%')  →  W1/W2/W3 加权  →  hinfsyn(P,1,1)  →  γ&lt;1 ? 成功 : 放松权重</div>
-  </div>
-
-  <div class="card p2">
-    <div class="card-header"><span class="icon">🧠</span><h3>t20 · 模型预测控制 MPC</h3><span class="tag">t20_mpc</span></div>
-    <p>滚动优化 + QP 约束求解 + 显式 MPC。带输入/状态约束的多变量控制——工业过程控制的标配。</p>
-  </div>
-
-  <div class="card p2">
-    <div class="card-header"><span class="icon">⚡</span><h3>t21 · 滑模控制 SMC</h3><span class="tag">t21_sliding_mode</span></div>
-    <p>非线性鲁棒控制。滑模面 s=λe+ė → 0，等效控制 + 切换控制。抖振抑制：饱和函数 / Super-Twisting 算法。</p>
-  </div>
-
-  <!-- ===== Phase 3 ===== -->
+  <!-- ==================== Phase 3 ==================== -->
   <div class="phase-title"><span class="dot p3"></span> Phase 3 · 机电系统 + 部署（t13-t15）</div>
 
+  <!-- t13 -->
   <div class="card p3">
-    <div class="card-header"><span class="icon">⚙️</span><h3>t13 · DC 电机控制</h3><span class="tag">t13_dc_motor</span></div>
-    <p>电磁转矩 + 机械负载耦合建模。级联 PI（电流环+转速环），LQR 对比。执行器建模实战。</p>
+    <div class="card-header"><span class="num">13</span><h3 id="s14">DC 电机控制 — 执行器建模实战</h3><span class="tag">t13_dc_motor.m</span></div>
+
+    <h4>为什么从电机开始？</h4>
+    <p>因为电机是控制工程最常见的"执行器"——控制器算出指令，最终要电机来执行。理解电机的动态特性才能真正理解"控制器为什么需要这样设计"。</p>
+
+    <h4>双时间尺度：电气 vs 机械</h4>
+    <p>DC 电机有两个储能元件：电感 L（电能存储）和转动惯量 J（动能存储）。电气时间常数 τ_e = L/R 通常在毫秒级（≈1ms），机械时间常数 τ_m = J/b 通常在秒级（≈50s）。<strong>电气响应极快，机械响应很慢——这就是为什么需要"级联 PI"。</strong></p>
+
+    <h4>级联 PI 控制结构</h4>
+    <p><strong>内环（电流环 ~500Hz）：</strong>控制电流 = 控制转矩。带宽高，反应快，保护硬件（限流）。</p>
+    <p><strong>外环（速度环 ~20Hz）：</strong>控制转速。带宽低，给内环提供电流指令。</p>
+    <p>两层 PI 串在一起，内环是外环的"执行器"。这种结构是工业伺服驱动器的标准——你的 CNC 机床、机器人关节都是这样控制的。</p>
+
+    <div class="keypoint">
+      <strong>级联 PI 的优势：</strong>电流限幅（防止烧电机）+ 调试直观（先调内环再调外环）+ 抗负载扰动。每个电机驱动器固件里都在跑这套逻辑。
+    </div>
   </div>
 
+  <!-- t14 -->
   <div class="card p3">
-    <div class="card-header"><span class="icon">🔋</span><h3>t14 · PMSM + FOC 矢量控制</h3><span class="tag">t14_foc_pmsm</span></div>
-    <p>Clarke → Park 坐标变换，d-q 解耦，SVPWM 原理。无刷电机矢量控制全流程——新能源车/机器人关节的核心技术。</p>
+    <div class="card-header"><span class="num">14</span><h3 id="s15">PMSM + FOC 矢量控制 — 无刷电机的核心算法</h3><span class="tag">t14_foc_pmsm.m</span></div>
+
+    <h4>PMSM 和 DC 电机的本质区别</h4>
+    <p>DC 电机：电流天然产生转矩（换向器+电刷自动切换电流方向）。<br>
+    PMSM（永磁同步电机）：三相交流电流产生旋转磁场，转子跟着转。转矩和电流的关系不直观——需要 FOC（磁场定向控制）来解耦。</p>
+
+    <h4>FOC 的三个步骤</h4>
+    <p><strong>1. Clarke 变换：</strong>三相电流 (a,b,c) → 两相静止坐标 (α,β)。就是把三个相差 120° 的线圈电流，投影到一个二维平面上。</p>
+    <p><strong>2. Park 变换：</strong>静止坐标 (α,β) → 旋转坐标 (d,q)。坐标系跟着转子一起转！在旋转坐标系里，电流变成了直流量（不再是正弦波）——这就可以用简单的 PI 控制了。</p>
+    <p><strong>3. PI 控制：</strong>在 d-q 坐标系中，d 轴电流控制磁场强度（通常设 id=0），q 轴电流控制转矩（和 DC 电机完全一样！）。</p>
+
+    <div class="analogy">
+      <strong>类比：</strong>你在旋转木马上想接住别人扔给你的球。<br>
+      从地面看（静止坐标），球的轨迹是复杂的曲线（正弦波）。<br>
+      从你的视角看（旋转坐标），球就是直直地飞过来（直流量）。<br>
+      Park 变换 = "站到旋转木马上看世界"——把正弦波变成直流量，控制就简单了。
+    </div>
+
+    <div class="keypoint">
+      FOC 是新能源车（特斯拉）、无人机（大疆）、机器人关节的<strong>核心技术</strong>。
+      学会 FOC = 理解无刷电机是怎么驱动的。本质还是 PI + 坐标变换！
+    </div>
   </div>
 
+  <!-- t15 -->
   <div class="card p3">
-    <div class="card-header"><span class="icon">💻</span><h3>t15 · C 代码生成与嵌入式部署</h3><span class="tag">t15_code_generation</span></div>
-    <p>连续→离散 (c2d)，离散 LQR (dlqr)，生成 C 代码，FreeRTOS 集成框架。不依赖 Simulink Coder——手动完成全流程。</p>
-    <div class="highlight-box">连续设计 → c2d 离散化 → dlqr 离散增益 → C 代码 → STM32</div>
+    <div class="card-header"><span class="num">15</span><h3 id="s16">C 代码生成 — 从 Simulink 仿真到 STM32 嵌入式</h3><span class="tag">t15_code_generation.m</span></div>
+
+    <h4>为什么需要"离散化"？</h4>
+    <p>Simulink 跑的是连续时间仿真（用微分方程）。STM32 单片机是数字芯片，只能每隔固定时间（采样周期 Ts）执行一次计算。<strong>连续→离散就是把微分方程变成差分方程。</strong></p>
+
+    <div class="formula">连续：ẋ = Ax + Bu  →  离散：x[k+1] = A<sub>d</sub>·x[k] + B<sub>d</sub>·u[k]
+A<sub>d</sub> = e<sup>A·Ts</sup>,  B<sub>d</sub> = (∫e<sup>At</sup>dt)·B</div>
+
+    <h4>五个步骤把 LQR 变成 C 代码</h4>
+    <ol>
+      <li><strong>连续设计：</strong><code>K_c = lqr(A, B, Q, R)</code> — 在纸上/Simulink 里设计好</li>
+      <li><strong>离散化：</strong><code>sys_d = c2d(ss(A,B,C,D), Ts, 'zoh')</code> — 把连续模型变成离散模型</li>
+      <li><strong>离散 LQR：</strong><code>[K_d,~,~] = dlqr(A_d, B_d, Q, R)</code> — 计算离散域的最优增益</li>
+      <li><strong>C 代码：</strong><code>u = -(K1*x1 + K2*x2) + Ki*integral</code> — 控制律就是 3 次乘法+加法</li>
+      <li><strong>FreeRTOS 集成：</strong>把控制函数放在定时器任务里，每 Ts 秒执行一次</li>
+    </ol>
+
+    <div class="keypoint">
+      <strong>这套工作流就是 "基于模型的设计 (MBD)"：</strong><br>
+      物理建模 → 控制器设计 → 仿真验证 → 自动代码生成 → 硬件部署。<br>
+      掌握这 5 步，你就能把任何控制算法从 Simulink 搬到真实的单片机上运行。
+      如果公司买了 Embedded Coder，右键点导出就能自动生成 .c/.h——省掉手写调试时间。
+    </div>
+  </div>
+
+  <!-- ==================== Phase 2B ==================== -->
+  <div class="phase-title"><span class="dot p2"></span> Phase 2 · 控制理论 — 高级专题（t16-t21）</div>
+
+  <!-- t16 -->
+  <div class="card p2">
+    <div class="card-header"><span class="num">16</span><h3 id="s17">频域分析 — 换个角度看系统</h3><span class="tag">t16_freq_domain.m</span></div>
+
+    <h4>时域 vs 频域</h4>
+    <p><strong>时域：</strong>看信号的"波形"——什么时间发生什么。比如阶跃响应图。<br>
+    <strong>频域：</strong>把信号拆成不同频率的正弦波之和，看系统对每个频率的反应。就像听音乐——时域是"某秒响了什么音"，频域是"低音鼓还是高音小提琴"。</p>
+
+    <h4>Bode 图 = 控制工程师的"心电图"</h4>
+    <p>Bode 图有两部分：<strong>幅频图</strong>（上）和<strong>相频图</strong>（下）。它回答两个问题：<br>
+    1. 输入一个 ω 频率的正弦波，输出幅值是输入的几倍？（幅频）<br>
+    2. 输出比输入滞后了多少度？（相频）</p>
+
+    <h4>增益裕度 GM 和相位裕度 PM</h4>
+    <p><strong>GM：</strong>增益还能放大多少倍系统才不稳定。GM > 6dB 才安全。<br>
+    <strong>PM：</strong>相位还能滞后多少度系统才不稳定。PM > 45° 是良好设计的标志。<br>
+    这两个数越小 = 系统离不稳定越近 = 越危险。</p>
+
+    <div class="analogy">
+      <strong>类比：</strong>你在摇晃一座桥。<br>
+      GM = 你还能用多大的力气摇它（力气太大桥会断）。<br>
+      PM = 你的摇晃和桥的摆动之间还能岔开多大的角度（同步了桥就共振垮掉）。<br>
+      频域分析告诉你<strong>离危险还有多远</strong>。
+    </div>
+  </div>
+
+  <!-- t17 -->
+  <div class="card p2">
+    <div class="card-header"><span class="num">17</span><h3 id="s18">超前-滞后校正器 — 改善系统的"基因"</h3><span class="tag">t17_lead_lag.m</span></div>
+
+    <h4>校正器解决什么问题？</h4>
+    <p>系统本身（比如一架飞机的动力学）改不了。但你可以<strong>在控制器前面串一个"校正网络"</strong>，改变整个开环的频率特性，从而让闭环表现变好。</p>
+
+    <h4>Lead（超前）vs Lag（滞后）</h4>
+    <p><strong>Lead 超前校正：</strong>在高频段提供相位超前（正的相位），增加相位裕度 → 系统更稳定、超调更小。代价是放大高频噪声。</p>
+    <p><strong>Lag 滞后校正：</strong>在低频段提高增益，减小稳态误差。不影响高频相位（转折频率设在很低的地方），代价是可能减慢响应。</p>
+    <p><strong>Lead-Lag 组合：</strong>同时改善动态响应和稳态精度——工程上等价于 PI + 超前网络，是最常用的组合。</p>
+
+    <div class="formula">Lead:  C(s) = K·(αTs+1)/(Ts+1),  α>1
+Lag:   C(s) = K·(Ts+1)/(βTs+1),  β>1</div>
+
+    <div class="tip">
+      <strong>什么时候用校正器而不是 PID？</strong>PID 是通用方案，校正器是针对性方案。
+      当你清楚知道"我需要在这里加 30° 相位"时，校正器比 PID 更精准。
+      很多工业控制器内部是 PID + Lead-Lag 的组合。
+    </div>
+  </div>
+
+  <!-- t18 -->
+  <div class="card p2">
+    <div class="card-header"><span class="num">18</span><h3 id="s19">系统辨识 — 不知道模型参数？从数据里猜！</h3><span class="tag">t18_system_id.m</span></div>
+
+    <h4>模型从哪来？</h4>
+    <p>t01-t17 都假设你知道系统参数。但现实中经常不知道——设备是别人造的、参数文档丢了、系统太复杂没法手推公式。<strong>系统辨识 = 做实验 + 用数据反推模型参数。</strong></p>
+
+    <h4>三种辨识方法</h4>
+    <p><strong>1. 阶跃响应法（最简单）：</strong>输入阶跃信号，从响应曲线直接"读"出 K（稳态值）、τ（63.2% 时间）、θ（延迟）。适合快速估算，对噪声敏感。</p>
+    <p><strong>2. 最小二乘法（更精确）：</strong>建立回归方程 y=Φθ，用 (ΦᵀΦ)⁻¹Φᵀy 求解最优参数 θ。有噪声时比阶跃法准得多。</p>
+    <p><strong>3. 工具箱方法（最省事）：</strong><code>procest(data, 'P1D')</code> 一行搞定。MATLAB 的 System Identification Toolbox 提供了完整的辨识→验证→迭代流程。</p>
+
+    <div class="analogy">
+      <strong>类比：</strong>你想知道一个黑箱子里有什么结构。<br>
+      你在入口敲一下（输入），在出口听声音（输出）。<br>
+      敲了 100 次，记录了 100 组"敲法+听到的声音"数据。<br>
+      然后用数学方法推断箱子内部的结构——这就是系统辨识。
+    </div>
+
+    <div class="tip">
+      <strong>关键原则：永远用独立数据做验证！</strong>用训练数据辨识出来的模型，再用一组<strong>没用过的</strong>测试数据验证。
+      如果在训练数据上误差很小但测试数据上很大 → 过拟合了。
+    </div>
+  </div>
+
+  <!-- t19 -->
+  <div class="card p2">
+    <div class="card-header"><span class="num">19</span><h3 id="s20">H∞ 鲁棒控制 — 主动考虑不确定性</h3><span class="tag">t19_robust_control.m</span></div>
+
+    <h4>LQR 的死穴</h4>
+    <p>LQR 假设你用的模型是 100% 准确的。但现实中：弹簧刚度可能±20%、阻尼可能±30%、负载质量会变化……LQR 在这种参数波动下性能会退化甚至不稳定。<strong>H∞ 控制在设计时就考虑了"参数可能不准"这件事。</strong></p>
+
+    <h4>H∞ 的核心思想</h4>
+    <p>H∞ 范数 = 系统从输入到输出的"最大能量增益"。H∞ 控制的目标是：<strong>在所有可能的不确定性下，这个最大增益小于 1</strong>——保证最坏情况也不差。</p>
+
+    <h4>混合灵敏度 S/KS/T 整形</h4>
+    <ul>
+      <li><strong>S = 1/(1+GK)：</strong>灵敏度——对扰动的抑制能力。低频要小（抑制扰动），高频无所谓。</li>
+      <li><strong>KS = K/(1+GK)：</strong>控制灵敏度——控制能量的大小。别让控制器太"暴力"。</li>
+      <li><strong>T = GK/(1+GK)：</strong>互补灵敏度——噪声抑制。高频要小（抑制传感器噪声）。</li>
+    </ul>
+
+    <div class="formula">设计流程：
+ureal('m', 1.0, '±20%')  →  选 W1/W2/W3 加权函数  →  hinfsyn(P, 1, 1)  →  γ&lt;1 ? 成功</div>
+
+    <div class="keypoint">
+      <strong>H∞ vs LQR 的取舍：</strong>H∞ 名义性能略低于 LQR（保守），但<strong>全局鲁棒性强得多</strong>。
+      航空航天、精密运动控制——这些"不能失败"的场景必须用 H∞。
+      普通工业控制——PID/LQR 够用，H∞ 是过度设计。
+    </div>
+  </div>
+
+  <!-- t20 -->
+  <div class="card p2">
+    <div class="card-header"><span class="num">20</span><h3 id="s21">MPC 模型预测控制 — 带约束的最优控制</h3><span class="tag">t20_mpc.m</span></div>
+
+    <h4>PID/LQR 的局限：不能处理约束</h4>
+    <p>现实世界中：电机电压不能超过 12V、阀门开度只能在 0-100%、温度变化率不能太快……PID 和 LQR 不考虑这些约束，只能在事后"限幅"——这可能导致性能退化或振荡。</p>
+
+    <h4>MPC 怎么工作？</h4>
+    <p>每个时刻，MPC 求解一个优化问题：<strong>"未来 N 步内，控制量怎么走最好？"</strong>约束条件包括输入上下限、变化率限制、输出范围……解出来后，<strong>只执行第一步</strong>，下一时刻重新优化。这叫做"滚动时域控制"。</p>
+
+    <div class="analogy">
+      <strong>开车类比：</strong>你开车去一个没去过的地方。<br>
+      PID = 只看眼前的路（当前误差），不看前方障碍。<br>
+      MPC = 看着前方 N 米的路面，规划一条避开所有坑的最优路径。<br>
+      但 MPC 计算量大——你能看清 300 米（Np=300）但每算一次要很久。<br>
+      所以工程上 Np 不能太大，采样周期不能太短。
+    </div>
+
+    <h4>MPC 的核心参数</h4>
+    <ul>
+      <li><strong>Np（预测时域）：</strong>看多远。Np 越大控制越"有远见"但计算越慢。</li>
+      <li><strong>Nc（控制时域）：</strong>控制几步。Nc &lt; Np 时后面的控制量保持不变。</li>
+      <li><strong>约束：</strong>这才是 MPC 的灵魂——没有约束就用 LQR 好了，不需要 MPC。</li>
+    </ul>
+  </div>
+
+  <!-- t21 -->
+  <div class="card p2">
+    <div class="card-header"><span class="num">21</span><h3 id="s22">滑模控制 SMC — 非线性鲁棒控制的"暴力美学"</h3><span class="tag">t21_sliding_mode.m</span></div>
+
+    <h4>滑模控制的哲学</h4>
+    <p>不追求"让系统温柔地靠近目标"，而是<strong>设计一个滑模面 s(x)=0，然后用不连续的开关控制把系统"摔"到这个面上</strong>。一旦到了滑模面上，系统的行为完全由滑模面决定——和系统本身的参数无关！</p>
+
+    <div class="formula">s = λe + ė = 0    ← 滑模面（一阶误差动态）
+u = u<sub>eq</sub> + u<sub>sw</sub>
+u<sub>eq</sub> = 等效控制（维持滑动）    u<sub>sw</sub> = -K·sign(s)（拽回滑模面）</div>
+
+    <h4>抖振问题 — SMC 的代价</h4>
+    <p>sign(s) 在 s=0 附近疯狂切换 → 控制信号剧烈抖动 → 执行器磨损、高频噪声。解决方案：</p>
+    <ul>
+      <li><strong>边界层饱和函数：</strong>用 sat(s/Φ) 代替 sign(s)，Φ 是边界层厚度。Φ 大→平滑但精度降。</li>
+      <li><strong>Super-Twisting 算法：</strong>二阶滑模，连续控制无抖振——高端应用的首选。</li>
+    </ul>
+
+    <div class="analogy">
+      <strong>类比：</strong>你想让球停在山谷底部。<br>
+      PID = 轻轻地推，慢慢调——温柔但怕风（扰动）。<br>
+      SMC = 两边有墙，球只能在两墙之间的槽（滑模面）里滑动——不管风多大球都掉不出去。<br>
+      代价是球一直撞墙（抖振）——加边界层 = 在墙上垫海绵（没那么震了但球能跑的范围稍大一点）。
+    </div>
+
+    <div class="keypoint">
+      SMC 适用场景：大扰动、参数大幅变化的系统——无人机抗风、导弹制导、电力电子变换器。
+      配合观测器可以做到无传感器下的高性能控制。但如果扰动不大，用 PID 就够了——SMC 的额外复杂性要有对应收益才值得。
+    </div>
   </div>
 
   <!-- ===== 学习路径 ===== -->
   <div class="card" style="border-left-color:#ff6b6b; background: linear-gradient(135deg, #fff5f5, #f5f5ff);">
-    <div class="card-header"><span class="icon">🗺️</span><h3>学习路径总览</h3></div>
+    <div class="card-header"><h3 id="s23">学习路径总览</h3></div>
+
     <div class="highlight-box">t01-t08 基础操作 ──→ t09 状态空间 ──→ t10 LQR 控制
                      │    │               │
                      │    ├── t11 观测器 ←── t12 Kalman
@@ -258,14 +791,24 @@ ureal('m',1.0,'±20%')  →  W1/W2/W3 加权  →  hinfsyn(P,1,1)  →  γ&lt;1 
          ┌───────────────┘
          ↓
     t13 DC电机 ←── t14 PMSM/FOC ←── t15 代码生成 → 嵌入式部署</div>
-    <p style="margin-top:12px;text-align:center;color:#888;">
+
+    <h4>建议学习顺序</h4>
+    <ul>
+      <li><strong>完全零基础：</strong>t01→t02→t03→t04→t05→t06→t07→t08。学完就能用 Simulink 搭简单模型。</li>
+      <li><strong>想学控制理论：</strong>继续 t09→t10→t11→t12→t16→t17。掌握从经典到现代控制的完整工具链。</li>
+      <li><strong>想做机器人/电机控制：</strong>接着 t13→t14。理解执行器怎么做。</li>
+      <li><strong>想上实际硬件：</strong>t15 必学——从仿真到 C 代码的最后一步。</li>
+      <li><strong>进阶提升：</strong>t18-t21 各专题可按兴趣选学，不需要按顺序。</li>
+    </ul>
+
+    <div class="keypoint" style="text-align:center;">
       ✨ 核心方法论：运行代码 → 观察模型 → 修改参数 → 理解原理 ✨<br>
-      在 MATLAB 命令窗口输入 <code style="background:#f0f0f0;padding:2px 8px;border-radius:4px;">run_all_tutorials</code> 一键运行全部 21 课
-    </p>
+      在 MATLAB 命令窗口输入 <code>run_all_tutorials</code> 一键运行全部 21 课
+    </div>
   </div>
 
   <div class="footer">
-    Simulink 控制工程教程 · 21 课 · v1.1.0<br>
+    Simulink 控制工程教程 · 21 课 · 学习笔记<br>
     <a href="https://github.com/xingd5478-ctrl/simulink-control-tutorial" target="_blank">GitHub 仓库</a> ·
     MIT License · 邢栋 · 2026
   </div>
