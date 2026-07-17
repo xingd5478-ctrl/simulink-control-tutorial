@@ -113,20 +113,24 @@ add_line([mdl '/Nested_Demo/Inner_Sub'], 'In1/1', 'Gain_Deep/1');
 add_line([mdl '/Nested_Demo/Inner_Sub'], 'Gain_Deep/1', 'Out1/1');
 fprintf('  [OK] Inner_Sub 内部（第三层）：Gain_Deep=4 搭建完成\n');
 
-%% ===== 第 6 步：运行仿真 =====
+%% ===== 第 6 步：开启信号记录 + 运行仿真 =====
+
+% 记录关键信号，便于在 MATLAB 中绘图
+phIn = get_param([mdl '/Sine_Input'], 'PortHandles');
+set_param(phIn.Outport(1), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'SineIn');
+phSP = get_param([mdl '/Signal_Processor'], 'PortHandles');
+set_param(phSP.Outport(1), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'SignalProcOut');
+phND = get_param([mdl '/Nested_Demo'], 'PortHandles');
+set_param(phND.Outport(1), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'NestedOut');
+
 fprintf('\n=== 运行仿真 ===\n');
 simOut = sim(mdl);
 
 %% ===== 第 7 步：绘图对比 =====
 
-% 提取数据
-try
-    inSig  = simOut.yout{1}.Values;
-    outSig = simOut.yout{2}.Values;
-catch
-    inSig  = simOut.logsout.getElement(1).Values;
-    outSig = simOut.logsout.getElement(2).Values;
-end
+inSig  = simOut.logsout.getElement('SineIn').Values;
+outSig = simOut.logsout.getElement('SignalProcOut').Values;
+nestOut = simOut.logsout.getElement('NestedOut').Values;
 
 figure;
 
@@ -142,11 +146,6 @@ xlabel('时间 (s)'); ylabel('幅值'); grid on;
 
 % 下图：Nested_Demo 输出
 subplot(2,1,2);
-try
-    nestOut = simOut.yout{3}.Values;
-catch
-    nestOut = simOut.logsout.getElement(3).Values;
-end
 plot(nestOut.Time, nestOut.Data, 'm', 'LineWidth', 2);
 title('Nested Demo 输出：Gain=2 × Gain=4 = 8 倍放大（无滤波，无延迟）');
 xlabel('时间 (s)'); ylabel('幅值'); grid on;

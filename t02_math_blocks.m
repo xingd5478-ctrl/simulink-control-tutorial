@@ -74,9 +74,51 @@ add_line(mdl, 'Demux/1', 'Scope2/1');
 add_line(mdl, 'Demux/2', 'Scope2/2');
 add_line(mdl, 'Demux/3', 'Scope2/3');
 
+%% ---------- 开启信号记录 ----------
+% 记录三路信号以便在 MATLAB 中绘图
+ph1 = get_param([mdl '/Sine1'], 'PortHandles');
+set_param(ph1.Outport(1), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'Sine1');
+ph2 = get_param([mdl '/Sine2'], 'PortHandles');
+set_param(ph2.Outport(1), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'Sine2');
+phProd = get_param([mdl '/Product'], 'PortHandles');
+set_param(phProd.Outport(1), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'Product');
+phDemux = get_param([mdl '/Demux'], 'PortHandles');
+set_param(phDemux.Outport(1), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'Demux1');
+set_param(phDemux.Outport(2), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'Demux2');
+set_param(phDemux.Outport(3), 'DataLogging', 'on', 'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'Demux3');
+
 %% ---------- 运行仿真 ----------
-sim(mdl);
+simOut = sim(mdl);
+
+%% ---------- MATLAB 绘图 ----------
+figure('Name', 't02: 数学运算与信号路由');
+
+% 上图：原始信号 vs 加法输出 vs 乘积
+subplot(2,1,1); hold on;
+plot(simOut.logsout.getElement('Sine1').Values.Time, ...
+     simOut.logsout.getElement('Sine1').Values.Data, 'LineWidth', 1);
+plot(simOut.logsout.getElement('Sine2').Values.Time, ...
+     simOut.logsout.getElement('Sine2').Values.Data, 'LineWidth', 1);
+plot(simOut.logsout.getElement('Product').Values.Time, ...
+     simOut.logsout.getElement('Product').Values.Data, 'LineWidth', 2);
+hold off;
+legend('sin(t)', 'sin(3t)', '(sin(t)+sin(3t))\times5', 'Location', 'best');
+title('信号运算：正弦叠加 × 常数增益');
+xlabel('时间 (s)'); ylabel('幅值'); grid on;
+
+% 下图：Mux→Demux 还原验证
+subplot(2,1,2); hold on;
+plot(simOut.logsout.getElement('Demux1').Values.Time, ...
+     simOut.logsout.getElement('Demux1').Values.Data, 'LineWidth', 1);
+plot(simOut.logsout.getElement('Demux2').Values.Time, ...
+     simOut.logsout.getElement('Demux2').Values.Data, 'LineWidth', 1);
+plot(simOut.logsout.getElement('Demux3').Values.Time, ...
+     simOut.logsout.getElement('Demux3').Values.Data, 'LineWidth', 2);
+hold off;
+legend('Demux ch1 (sin t)', 'Demux ch2 (sin 3t)', 'Demux ch3 (乘积)', 'Location', 'best');
+title('Mux→Demux 信号拆分：三路还原对比');
+xlabel('时间 (s)'); ylabel('幅值'); grid on;
 
 fprintf('教程 02 完成！\n');
-fprintf('Scope1: 乘积波形 = (sin(t) + sin(3t)) × 5\n');
-fprintf('Scope2: Mux→Demux 还原的三路信号\n');
+fprintf('上图: 乘积波形 = (sin(t) + sin(3t)) × 5\n');
+fprintf('下图: Mux→Demux 还原的三路信号\n');
