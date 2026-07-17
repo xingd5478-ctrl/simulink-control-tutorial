@@ -1,0 +1,31 @@
+# 第三方版权材料，不开源
+UCT-Introduction-to-Robotics/
+Mobile-Robotics/
+Robotic-Manipulators/
+robotics-projects/
+*.pdf
+*.ppt
+*.pptx
+*.docx
+
+# Simulink 运行时输出
+tutorial06_output.mat
+
+# MATLAB / Simulink 生成文件
+slprj/
+*.slxc
+*.autosave
+*.asv
+*.mexw64
+*.mexa64
+*.mexmaci64
+
+# 代码生成产物
+*_ert_rtw/
+*_grt_rtw/
+codegen/
+
+# 系统文件
+Thumbs.db
+.DS_Store
+desktop.ini
