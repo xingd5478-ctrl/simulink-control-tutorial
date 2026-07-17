@@ -136,7 +136,8 @@ fprintf('  闭环极点: %.1f, %.1f (比开环快得多)\n\n', E_lqr(1), E_lqr(2
 %% ===== 第 4 步：搭建 Simulink =====
 
 mdl = 'tutorial13_dc_motor';
-if bdIsLoaded(mdl), close_system(mdl, 1); end
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
+if bdIsLoaded(mdl), save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx'])); close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
 

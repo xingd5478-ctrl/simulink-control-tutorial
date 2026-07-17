@@ -8,6 +8,7 @@ clear; close all;
 %% ---------- 第1步：创建新模型 ----------
 % new_system 创建一个空白模型窗口
 mdl = 'tutorial01_signals';
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
 if bdIsLoaded(mdl), close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
@@ -59,4 +60,5 @@ plot(sig.Time, sig.Data, 'LineWidth', 1.5);
 title('增益模块输出：3 × 2 = 6 振幅的正弦波');
 xlabel('时间 (s)'); ylabel('幅值'); grid on;
 
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
 fprintf('教程 01 完成！打开模型 "%s" 查看模块连接。\n', mdl);

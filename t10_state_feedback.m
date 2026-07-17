@@ -185,7 +185,8 @@ fprintf('        K 的值越小 → 控制越"柔" → 响应慢但省能量\n\n
 %% ===== 第 4 步：搭建 Simulink 模型 =====
 
 mdl = 'tutorial10_state_feedback';
-if bdIsLoaded(mdl), close_system(mdl, 1); end
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
+if bdIsLoaded(mdl), save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx'])); close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
 

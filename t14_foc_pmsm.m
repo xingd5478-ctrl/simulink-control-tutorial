@@ -147,7 +147,8 @@ fprintf('  速度环 (~30Hz):   Kp=%.4f, Ki=%.4f\n\n', Kp_spd_foc, Ki_spd_foc);
 %% ===== 第 3 步：搭建 Simulink =====
 
 mdl = 'tutorial14_foc';
-if bdIsLoaded(mdl), close_system(mdl, 1); end
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
+if bdIsLoaded(mdl), save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx'])); close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
 

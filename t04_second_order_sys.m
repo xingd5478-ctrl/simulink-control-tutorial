@@ -13,6 +13,7 @@
 clear; close all;
 
 mdl = 'tutorial04_second_order';
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
 if bdIsLoaded(mdl), close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
@@ -82,4 +83,5 @@ fprintf('教程 04 完成！\n');
 fprintf('关键观察：\n');
 fprintf('  欠阻尼 (ζ=0.2): 有明显超调，振荡衰减 → 适合快速响应的场景\n');
 fprintf('  临界阻尼 (ζ=1.0): 无超调且上升最快 → 理论最优\n');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
 fprintf('  过阻尼 (ζ=2.0): 无超调但上升缓慢 → 响应过于迟钝\n');

@@ -11,6 +11,7 @@
 clear; close all;
 
 mdl = 'tutorial03_first_order';
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
 if bdIsLoaded(mdl), close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
@@ -71,4 +72,5 @@ xlabel('时间 (s)'); ylabel('输出'); grid on;
 
 fprintf('\n教程 03 完成！\n');
 fprintf('观察：\tau 越小 → 系统响应越快，越早达到稳态值 1\n');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
 fprintf('稳态值 = K x 输入 = 1 x 1 = 1（三个系统最终都达到 1）\n');

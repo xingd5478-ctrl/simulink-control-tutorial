@@ -101,7 +101,8 @@ fprintf('  比 Luenberger 的极点 [-6, -8] 更靠近虚轴 → 收敛慢但更
 %% ===== 第 2 步：搭建 Simulink 模型（对比实验）=====
 
 mdl = 'tutorial12_kalman';
-if bdIsLoaded(mdl), close_system(mdl, 1); end
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
+if bdIsLoaded(mdl), save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx'])); close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
 

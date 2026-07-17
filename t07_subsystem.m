@@ -12,6 +12,7 @@
 clear; close all;
 
 mdl = 'tutorial07_subsystem';
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
 if bdIsLoaded(mdl), close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
@@ -165,4 +166,5 @@ fprintf('  第二层：Signal_Processor 内部（Gain + Filter）\n');
 fprintf('  第三层：Nested_Demo → Inner_Sub 内部（Gain_Deep）\n');
 fprintf('\n  子系统 = 编程里的函数封装\n');
 fprintf('  路径用 / 表示层级，和文件夹一样\n');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
 fprintf('  可以无限嵌套，每一层独立、互不影响\n');

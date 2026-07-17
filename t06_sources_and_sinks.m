@@ -20,6 +20,7 @@ u_input = [t_input, sin(t_input) + 0.5*sin(3*t_input)];  % 自定义复合信号
 assignin('base', 'u_input', u_input);
 
 mdl = 'tutorial06_sources_sinks';
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
 if bdIsLoaded(mdl), close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
@@ -115,4 +116,5 @@ fprintf('重点回顾：\n');
 fprintf('  From Workspace — 将 MATLAB 数据作为输入信号\n');
 fprintf('  To Workspace — 将仿真结果保存到 MATLAB 工作区\n');
 fprintf('  To File — 将仿真结果保存到 .mat 文件\n');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
 fprintf('  Display — 实时显示当前信号值（适合调试）\n');

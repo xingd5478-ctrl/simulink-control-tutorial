@@ -159,7 +159,8 @@ fprintf('  两者可以独立设计，互不干扰！\n\n');
 %% ===== 第 4 步：搭建 Simulink 模型 =====
 
 mdl = 'tutorial11_observer';
-if bdIsLoaded(mdl), close_system(mdl, 1); end
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
+if bdIsLoaded(mdl), save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx'])); close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
 

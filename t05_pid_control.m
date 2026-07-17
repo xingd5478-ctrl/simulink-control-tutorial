@@ -15,6 +15,7 @@
 clear; close all;
 
 mdl = 'tutorial05_pid';
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
 if bdIsLoaded(mdl), close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
@@ -91,4 +92,5 @@ fprintf('动手实验：尝试修改 PID 的参数，观察响应变化\n');
 fprintf('  - 只保留 P (I=0, D=0)：观察稳态误差\n');
 fprintf('  - 增大 I：观察如何消除稳态误差（可能引起振荡）\n');
 fprintf('  - 增大 D：观察如何抑制超调\n');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
 fprintf('  - 试试积分饱和 (I 太大) 和微分噪声放大 (D 太大) 的问题\n');

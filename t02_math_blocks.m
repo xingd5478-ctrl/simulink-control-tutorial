@@ -6,6 +6,7 @@
 clear; close all;
 
 mdl = 'tutorial02_math';
+addpath(fullfile(fileparts(mfilename('fullpath')), 'models'));
 if bdIsLoaded(mdl), close_system(mdl, 0); end
 new_system(mdl, 'Model');
 open_system(mdl);
@@ -121,4 +122,5 @@ xlabel('时间 (s)'); ylabel('幅值'); grid on;
 
 fprintf('教程 02 完成！\n');
 fprintf('上图: 乘积波形 = (sin(t) + sin(3t)) × 5\n');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
 fprintf('下图: Mux→Demux 还原的三路信号\n');
