@@ -122,9 +122,18 @@ title('时域：不同增益下的阶跃响应');
 xlabel('时间 (s)'); ylabel('输出');
 
 subplot(1,2,2); hold on;
+GM_list = zeros(1, length(K_list));
+PM_list = zeros(1, length(K_list));
 for i = 1:length(K_list)
-    [GM_i, PM_i] = margin(K_list(i)*sys);
+    [GM_list(i), PM_list(i)] = margin(K_list(i)*sys);
 end
+% 打印稳定裕度
+fprintf('\n【不同增益下的稳定裕度】\n');
+for i = 1:length(K_list)
+    fprintf('  K=%.0f: GM=%.2f dB, PM=%.1f°\n', K_list(i), ...
+        20*log10(GM_list(i)), PM_list(i));
+end
+fprintf('\n');
 % 手动画出幅频对比
 for i = 1:length(K_list)
     [mag_i, ~, w_i] = bode(K_list(i)*sys);

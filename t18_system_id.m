@@ -48,7 +48,6 @@ u(t_data < 1) = 0;  % 1秒时阶跃
 
 % 仿真真实系统输出
 [y_true, ~] = lsim(sys_true, u, t_data);
-y_true = y_true * 1;  % 延迟用个简单方法模拟
 
 % 手动加延迟（时移信号）
 td_samples = round(td_true / dt);

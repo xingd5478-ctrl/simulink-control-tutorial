@@ -241,4 +241,4 @@ fprintf('  - 传感器：量程、精度、时间常数...\n');
 fprintf('  - 控制器：Kp, Ki, Kd, 采样周期...\n');
 fprintf('  这些参数化模块本质上都是 Masked Subsystem！\n\n');
 
-fprintf('  下一课预告：t09 将用 Simscape 搭建真实的机电物理模型。\n');
+fprintf('  下一课预告：t09 将介绍状态空间模型（现代控制理论基础）。\n');

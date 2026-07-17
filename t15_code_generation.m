@@ -306,4 +306,5 @@ fprintf('  如果买了 Simulink Coder / Embedded Coder：\n');
 fprintf('    右键子系统 → C/C++ Code → Build → 自动生成 .c/.h\n');
 fprintf('    和手写一样的质量，但省掉调试时间\n\n');
 
-fprintf('  ― 全教程系列完结 ―\n');
+fprintf('  ― Phase 3 结束，全部教程 21 课 ―\n');
+fprintf('  继续学习：t16 频域分析 → t17 校正器 → t18-t21 高级控制专题\n');

@@ -88,12 +88,7 @@ fprintf('  Nc < Np → 后面 Np-Nc 步控制量保持不变\n\n');
 F = zeros(nx*Np, nx);
 Phi = zeros(nx*Np, nu*Nc);
 
-A_pow = eye(nx);
-for i = 1:Np
-    A_pow = A_d * A_pow;  % 避免循环中的临时变量
-end
-
-% 重新正确构造
+% 构造预测矩阵 F 和 Phi
 for i = 1:Np
     F((i-1)*nx+1:i*nx, :) = A_d^i;
     for j = 1:min(i, Nc)
@@ -168,14 +163,16 @@ for k = 1:N_steps
     f = 2 * Phi' * Q_bar * F * x;
 
     % 用 quadprog 求解带约束 QP
-    options = optimoptions('quadprog', 'Display', 'off', ...
-        'Algorithm', 'interior-point-convex');
-    [U_opt, ~, exitflag] = quadprog(H, f, Aineq, bineq, ...
-        [], [], [], [], [], options);
-
-    if exitflag < 0
-        warning('QP 求解失败 @ step %d, 使用备选方案', k);
-        U_opt = -H \ f;  % 回退到无约束解
+    if exist('quadprog', 'file')
+        options = optimoptions('quadprog', 'Display', 'off', ...
+            'Algorithm', 'interior-point-convex');
+        [U_opt, ~, exitflag] = quadprog(H, f, Aineq, bineq, ...
+            [], [], [], [], [], options);
+        if exitflag < 0
+            U_opt = -H \ f;  % 回退到无约束解
+        end
+    else
+        U_opt = -H \ f;  % 无 Optimization Toolbox，用解析解
     end
 
     u = U_opt(1);

@@ -167,7 +167,12 @@ plot(t_sim, s_hist, 'b', 'LineWidth', 1);
 hold on; yline(0, 'r--', 'LineWidth', 1);
 title('滑模面 s = λe + ė → 0');
 xlabel('时间 (s)'); ylabel('s'); grid on;
-fprintf('  滑模面 s 在 ~%.2fs 内收敛到 0\n', t_sim(find(abs(s_hist)<0.01,1)));
+idx_s0 = find(abs(s_hist)<0.01, 1);
+if ~isempty(idx_s0)
+    fprintf('  滑模面 s 在 ~%.2fs 内收敛到 0\n', t_sim(idx_s0));
+else
+    fprintf('  滑模面 s 未收敛到 0\n');
+end
 
 % (4) 相轨迹 (位置-速度)
 subplot(3,2,4); hold on;
@@ -192,9 +197,15 @@ xlabel('时间 (s)'); ylabel('位移 (m)'); grid on;
 
 % (6) RMS 误差柱状图
 subplot(3,2,6);
-rmse = [rms(x1_hist(1,1000:end)-r(1000:end));
-        rms(x1_hist(2,1000:end)-r(1000:end));
-        rms(x1_hist(3,1000:end)-r(1000:end))];
+try
+    rmse = [rms(x1_hist(1,1000:end)-r(1000:end));
+            rms(x1_hist(2,1000:end)-r(1000:end));
+            rms(x1_hist(3,1000:end)-r(1000:end))];
+catch
+    rmse = [std(x1_hist(1,1000:end)-r(1000:end));
+            std(x1_hist(2,1000:end)-r(1000:end));
+            std(x1_hist(3,1000:end)-r(1000:end))];
+end
 b = bar(rmse);
 b.FaceColor = 'flat';
 b.CData(1,:) = [0 0.45 0.74];

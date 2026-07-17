@@ -436,8 +436,12 @@ legend('开环', '级联 PI', 'LQR + 积分', '目标 100 rad/s', ...
 title('转速响应 — 三种控制方案对比');
 xlabel('时间 (s)'); ylabel('转速 ω (rad/s)'); grid on;
 
-fprintf('  PI 稳定时间: ~%.3f s\n', ...
-    t(find(abs(w_PI-100) < 2, 1, 'first')));
+idx_s = find(abs(w_PI-100) < 2, 1, 'first');
+if ~isempty(idx_s)
+    fprintf('  PI 稳定时间: ~%.3f s\n', t(idx_s));
+else
+    fprintf('  PI 未在仿真时间内稳定\n');
+end
 
 % --- 子图 2：电流响应 (PI) ---
 subplot(3, 1, 2);

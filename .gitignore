@@ -20,6 +20,9 @@ slprj/
 *.mexa64
 *.mexmaci64
 
+# 调试产物
+diary
+
 # 代码生成产物
 *_ert_rtw/
 *_grt_rtw/
