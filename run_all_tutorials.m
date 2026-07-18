@@ -1,5 +1,5 @@
 function run_all_tutorials()
-%RUN_ALL_TUTORIALS 一键依次运行全部 21 个教程
+%RUN_ALL_TUTORIALS 一键依次运行全部 30 个教程
 %
 %   每课运行完毕后暂停，方便查看模型和截图；
 %   所有 Figure 会同时自动保存为 PNG 到 docs/images/，
@@ -9,6 +9,7 @@ function run_all_tutorials()
 %     >> run_all_tutorials
 
 tutorials = { ...
+    % Phase 1 — 基础
     't01_signal_basics'
     't02_math_blocks'
     't03_first_order_sys'
@@ -17,19 +18,33 @@ tutorials = { ...
     't06_sources_and_sinks'
     't07_subsystem'
     't08_masking'
+    % Phase 2 — 经典控制设计
+    't16_freq_domain'
+    't17_lead_lag'
+    't22_root_locus'
+    % Phase 3 — 现代控制理论
     't09_state_space'
     't10_state_feedback'
     't11_observer'
     't12_kalman_filter'
-    't13_dc_motor'
-    't14_foc_pmsm'
-    't15_code_generation'
-    't16_freq_domain'
-    't17_lead_lag'
+    % Phase 4 — 高级控制专题
     't18_system_id'
     't19_robust_control'
     't20_mpc'
-    't21_sliding_mode'};
+    't21_sliding_mode'
+    't23_mrac'
+    't24_fuzzy_control'
+    % Phase 5 — 机电系统与部署
+    't13_dc_motor'
+    't14_foc_pmsm'
+    't25_simscape'
+    't15_code_generation'
+    % Phase 6 — 综合应用案例
+    't26_robot_kinematics'
+    't27_msd_modeling'
+    't28_dsp_basics'
+    't29_msd_control'
+    't30_active_suspension'};
 
 outDir = fullfile(fileparts(mfilename('fullpath')), 'docs', 'images');
 if ~exist(outDir, 'dir'), mkdir(outDir); end
@@ -59,7 +74,7 @@ for i = 1:n
 end
 
 fprintf('\n================================================\n');
-fprintf('  全部 %d 课运行完毕！所有图像在 docs/images/\n', n);
+fprintf('  全部 %d 课运行完毕！所有图像保存在 docs/images/\n', n);
 fprintf('================================================\n');
 end
 

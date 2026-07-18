@@ -2,6 +2,32 @@
 
 All notable changes to this project are documented here.
 
+## [1.3.0] - 2026-07-18
+
+### Added
+- 4 new tutorials: t22 (Root Locus), t23 (MRAC), t24 (Fuzzy), t25 (Simscape)
+- Simulink models for t15-t21 (7 previously analysis-only scripts now have .slx files)
+- `check_setup.m` — environment checker for beginners
+- FAQ section in README (中文/English)
+- Beginner-friendly quickstart guide with step-by-step instructions
+
+### Changed
+- Total tutorials: 21 → 25 (all 25 now have corresponding .slx models)
+- Restructured course into 5 progressive Phases (was 3)
+  - Phase 1: Simulink Basics → Phase 2: Classical Control → Phase 3: Modern Control
+  - Phase 4: Advanced Control → Phase 5: Applications & Deployment
+- Reorganized run_all_tutorials.m and t00_main_guide.m to follow learning path
+- Updated README (中文/English) with new Phase tables, learning path diagram, and FAQ
+
+### Fixed
+- t23: Completed MIT adaptive law wiring (was marked TODO)
+- t13: Wired Sum_FF feedforward path
+- t12: Removed unused SumK_Luenberger block
+- t24: Fixed Fuzzy Logic Toolbox fallback when toolbox not installed
+- t25: Updated Simscape block paths for R2025a compatibility
+- t21/t17/t24: Fixed dual-controller Plant block conflicts
+- All save_system paths now use absolute paths (t22-t25)
+
 ## [1.2.0] - 2026-07-18
 
 ### Added

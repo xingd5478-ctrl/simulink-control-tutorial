@@ -22,15 +22,32 @@ fprintf('============================================\n');
 fprintf('  教程 16：频域分析 — Bode / Nyquist / Nichols\n');
 fprintf('============================================\n\n');
 
-%% ===== 第 1 步：构建示例系统 =====
 
-% 质量-弹簧-阻尼系统（二阶）
-m = 1.0;  c = 0.3;  k = 10.0;
+%% ===== Simulink 模型：频域响应测量 =====
 
-sys = tf([1], [m, c, k]);  % G(s) = 1/(s² + 0.3s + 10)
+mdl = 'tutorial16_freq';
+if bdIsLoaded(mdl), close_system(mdl, 0); end
+new_system(mdl, 'Model');
+open_system(mdl);
 
-fprintf('【示例系统】质量-弹簧-阻尼\n');
-fprintf('  G(s) = 1 / (s² + %.1fs + %.0f)\n', c, k);
+% 二阶被控对象
+add_block('simulink/Sources/Sine Wave', [mdl '/Sine Sweep'], ...
+    'Position', [50, 80, 100, 120]);
+set_param([mdl '/Sine Sweep'], 'Frequency', '1', 'Amplitude', '1');
+
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant'], ...
+    'Position', [200, 80, 290, 120]);
+set_param([mdl '/Plant'], 'Numerator', '[4]', 'Denominator', '[1 0.5 4]');
+
+add_block('simulink/Sinks/Scope', [mdl '/Scope'], ...
+    'Position', [400, 80, 450, 120]);
+
+add_line(mdl, 'Sine Sweep/1', 'Plant/1');
+add_line(mdl, 'Plant/1', 'Scope/1');
+
+disp('  [Simulink] tutorial16_freq.slx created');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
+fprintf('  G(s) = 1 / (s^2 + %.1fs + %.0f)\n', c, k);
 fprintf('  自然频率 ωn = %.2f rad/s (%.2f Hz)\n', sqrt(k/m), sqrt(k/m)/(2*pi));
 fprintf('  阻尼比 ζ = %.3f\n\n', c/(2*sqrt(m*k)));
 
@@ -150,6 +167,8 @@ hold off;
 fprintf('========================================\n');
 fprintf('  教程 16 完成！\n');
 fprintf('========================================\n\n');
+
+
 
 fprintf('【关键结论】\n');
 fprintf('  1. Bode图 = 控制工程师的"心电图"\n');

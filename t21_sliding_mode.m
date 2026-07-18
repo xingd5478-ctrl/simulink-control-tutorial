@@ -26,6 +26,44 @@ fprintf('============================================\n');
 fprintf('  教程 21：滑模控制 — 非线性鲁棒控制\n');
 fprintf('============================================\n\n');
 
+%% ==== Simulink Model: SMC vs PID ====
+mdl = 'tutorial21_smc';
+if bdIsLoaded(mdl), close_system(mdl, 0); end
+new_system(mdl, 'Model');
+open_system(mdl);
+add_block('simulink/Sources/Step', [mdl '/Step'], 'Position', [50, 80, 100, 120]);
+set_param([mdl '/Step'], 'Time', '0.5', 'After', '1');
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant SMC'], 'Position', [400, 60, 490, 100]);
+set_param([mdl '/Plant SMC'], 'Numerator', '[1]', 'Denominator', '[1 2 5]');
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant PID'], 'Position', [400, 180, 490, 220]);
+set_param([mdl '/Plant PID'], 'Numerator', '[1]', 'Denominator', '[1 2 5]');
+% SMC path
+add_block('simulink/Math Operations/Add', [mdl '/Sum SMC'], 'Position', [150, 50, 180, 80]);
+set_param([mdl '/Sum SMC'], 'Inputs', '|+-');
+add_block('simulink/Math Operations/Sign', [mdl '/Sign'], 'Position', [230, 55, 260, 85]);
+add_block('simulink/Math Operations/Gain', [mdl '/K_smc'], 'Position', [300, 55, 330, 85]);
+set_param([mdl '/K_smc'], 'Gain', '3');
+% PID path
+add_block('simulink/Math Operations/Add', [mdl '/Sum PID'], 'Position', [150, 170, 180, 200]);
+set_param([mdl '/Sum PID'], 'Inputs', '|+-');
+add_block('simulink/Continuous/PID Controller', [mdl '/PID'], 'Position', [230, 170, 280, 210]);
+set_param([mdl '/PID'], 'P', '2', 'I', '0.5', 'D', '0.5', 'N', '100');
+add_block('simulink/Sinks/Scope', [mdl '/Scope'], 'Position', [580, 60, 630, 210]);
+set_param([mdl '/Scope'], 'NumInputPorts', '2');
+% Connections
+add_line(mdl, 'Step/1', 'Sum SMC/1');
+add_line(mdl, 'Sum SMC/1', 'Sign/1');
+add_line(mdl, 'Sign/1', 'K_smc/1');
+add_line(mdl, 'K_smc/1', 'Plant SMC/1');
+add_line(mdl, 'Plant SMC/1', 'Scope/1');
+add_line(mdl, 'Plant SMC/1', 'Sum SMC/2');
+add_line(mdl, 'Step/1', 'Sum PID/1');
+add_line(mdl, 'Sum PID/1', 'PID/1');
+add_line(mdl, 'PID/1', 'Plant PID/1');
+add_line(mdl, 'Plant PID/1', 'Scope/2');
+add_line(mdl, 'Plant PID/1', 'Sum PID/2');
+fprintf('  [Simulink] tutorial21_smc.slx created\\n\\n');
+
 %% ===== 第 1 步：被控对象 =====
 
 m = 1.0;  c_real = 0.5;  k_real = 4.0;
@@ -274,3 +312,5 @@ function y = sat(x)
         y = sign(x);
     end
 end
+
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));

@@ -24,6 +24,57 @@ fprintf('============================================\n');
 fprintf('  教程 17：超前-滞后校正器设计\n');
 fprintf('============================================\n\n');
 
+
+%% ===== Simulink 模型：校正器对比 =====
+
+mdl = 'tutorial17_leadlag';
+if bdIsLoaded(mdl), close_system(mdl, 0); end
+new_system(mdl, 'Model');
+open_system(mdl);
+
+% 被控对象
+add_block('simulink/Sources/Step', [mdl '/Step'], ...
+    'Position', [50, 80, 100, 120]);
+set_param([mdl '/Step'], 'Time', '0.5', 'After', '1');
+
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant NoComp'], ...
+    'Position', [350, 50, 440, 90]);
+set_param([mdl '/Plant NoComp'], 'Numerator', '[1]', 'Denominator', '[1 2 1]');
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant Lead'], ...
+    'Position', [350, 150, 440, 190]);
+set_param([mdl '/Plant Lead'], 'Numerator', '[1]', 'Denominator', '[1 2 1]');
+
+% 无校正路径（直接反馈）
+add_block('simulink/Math Operations/Add', [mdl '/Sum NoComp'], ...
+    'Position', [150, 50, 180, 80]);
+set_param([mdl '/Sum NoComp'], 'Inputs', '|+-');
+add_block('simulink/Sinks/Scope', [mdl '/Scope'], ...
+    'Position', [550, 30, 600, 180]);
+set_param([mdl '/Scope'], 'NumInputPorts', '2');
+
+% 有 Lead 校正路径
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Lead Comp'], ...
+    'Position', [200, 160, 260, 200]);
+set_param([mdl '/Lead Comp'], 'Numerator', '[1 2]', 'Denominator', '[1 8]');
+add_block('simulink/Math Operations/Add', [mdl '/Sum Comp'], ...
+    'Position', [150, 150, 180, 180]);
+set_param([mdl '/Sum Comp'], 'Inputs', '|+-');
+
+% 连线
+add_line(mdl, 'Step/1', 'Sum NoComp/1');
+add_line(mdl, 'Sum NoComp/1', 'Plant NoComp/1');
+add_line(mdl, 'Plant NoComp/1', 'Scope/1');
+add_line(mdl, 'Plant NoComp/1', 'Sum NoComp/2');
+
+add_line(mdl, 'Step/1', 'Sum Comp/1');
+add_line(mdl, 'Sum Comp/1', 'Lead Comp/1');
+add_line(mdl, 'Lead Comp/1', 'Plant Lead/1');
+add_line(mdl, 'Plant Lead/1', 'Scope/2');
+add_line(mdl, 'Plant Lead/1', 'Sum Comp/2');
+
+disp('  [Simulink] tutorial17_leadlag.slx created');
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
+
 %% ===== 第 1 步：原始系统 — 看看哪不好 =====
 
 % 三阶系统：慢 + 超调大
@@ -138,6 +189,10 @@ title('各方案阶跃响应对比'); grid on;
 fprintf('========================================\n');
 fprintf('  教程 17 完成！\n');
 fprintf('========================================\n\n');
+
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
+
+
 
 fprintf('【校正器设计口诀】\n');
 fprintf('  Lag (滞后): 加低频增益 → 减稳态误差\n');

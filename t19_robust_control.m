@@ -21,6 +21,40 @@ fprintf('============================================\n');
 fprintf('  教程 19：鲁棒控制 H∞ / μ 综合\n');
 fprintf('============================================\n\n');
 
+%% ===== Simulink 模型：鲁棒控制反馈回路 =====
+
+mdl = 'tutorial19_robust';
+if bdIsLoaded(mdl), close_system(mdl, 0); end
+new_system(mdl, 'Model');
+open_system(mdl);
+
+add_block('simulink/Sources/Step', [mdl '/Step'], ...
+    'Position', [50, 80, 100, 120]);
+set_param([mdl '/Step'], 'Time', '0.5', 'After', '1');
+
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Nominal Plant'], ...
+    'Position', [350, 80, 440, 120]);
+set_param([mdl '/Nominal Plant'], 'Numerator', '[1]', 'Denominator', '[1 2 5]');
+
+add_block('simulink/Math Operations/Add', [mdl '/Sum'], ...
+    'Position', [150, 80, 180, 110]);
+set_param([mdl '/Sum'], 'Inputs', '|+-');
+
+add_block('simulink/Math Operations/Gain', [mdl '/K'], ...
+    'Position', [230, 80, 270, 110]);
+set_param([mdl '/K'], 'Gain', '5');
+
+add_block('simulink/Sinks/Scope', [mdl '/Scope'], ...
+    'Position', [550, 80, 600, 120]);
+
+add_line(mdl, 'Step/1', 'Sum/1');
+add_line(mdl, 'Sum/1', 'K/1');
+add_line(mdl, 'K/1', 'Nominal Plant/1');
+add_line(mdl, 'Nominal Plant/1', 'Scope/1');
+add_line(mdl, 'Nominal Plant/1', 'Sum/2');
+
+fprintf('  [Simulink] tutorial19_robust.slx 已创建\n\n');
+
 %% ===== 第 1 步：名义系统 + 不确定性建模 =====
 
 m_nom = 1.0;  c_nom = 1.5;  k_nom = 10.0;
@@ -431,3 +465,5 @@ function Gs = perturb_nominal(G_nom, pct)
     pert = 1 + pct * (2*rand - 1);
     Gs = G_nom * pert;
 end
+
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));

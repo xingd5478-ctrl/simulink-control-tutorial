@@ -168,6 +168,69 @@ sgtitle('教程 15：离散 LQR — 不同采样周期下的控制效果对比')
 fprintf('\n  观察：Ts 越小 → K_d 越接近 K_c → 效果越好\n');
 fprintf('        Ts=50ms → 系统明显抖动 → 采样太慢！\n\n');
 
+%% ===== Simulink 模型：连续 vs 离散 LQR 对比 =====
+
+mdl = 'tutorial15_codegen';
+if bdIsLoaded(mdl), close_system(mdl, 0); end
+new_system(mdl, 'Model');
+open_system(mdl);
+
+Ts_model = 0.005;  % 5ms
+Kp = 3;  % 标量比例增益（用于连续 vs 离散对比）
+% 离散化被控对象
+sys_d2 = c2d(ss(A, B, C, D), Ts_model, 'zoh');
+
+add_block('simulink/Sources/Step', [mdl '/Step Ref'], ...
+    'Position', [50, 80, 100, 120]);
+set_param([mdl '/Step Ref'], 'Time', '0.5', 'After', '1');
+
+% 连续路径：比例控制 + 连续被控对象
+add_block('simulink/Math Operations/Add', [mdl '/Sum Cont'], ...
+    'Position', [150, 60, 180, 90]);
+set_param([mdl '/Sum Cont'], 'Inputs', '|+-');
+add_block('simulink/Math Operations/Gain', [mdl '/Kp_cont'], ...
+    'Position', [230, 60, 270, 90]);
+set_param([mdl '/Kp_cont'], 'Gain', num2str(Kp));
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant Cont'], ...
+    'Position', [340, 60, 430, 100]);
+set_param([mdl '/Plant Cont'], 'Numerator', '[1]', ...
+    'Denominator', ['[1 ' num2str(c) ' ' num2str(k) ']']);
+
+% 离散路径：比例控制 + 零阶保持 + 连续被控对象 = 离散闭环
+add_block('simulink/Math Operations/Add', [mdl '/Sum Disc'], ...
+    'Position', [150, 180, 180, 210]);
+set_param([mdl '/Sum Disc'], 'Inputs', '|+-');
+add_block('simulink/Math Operations/Gain', [mdl '/Kp_disc'], ...
+    'Position', [230, 175, 270, 215]);
+set_param([mdl '/Kp_disc'], 'Gain', num2str(Kp));
+add_block('simulink/Discrete/Zero-Order Hold', [mdl '/ZOH'], ...
+    'Position', [300, 185, 330, 215]);
+set_param([mdl '/ZOH'], 'SampleTime', num2str(Ts_model));
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant Disc'], ...
+    'Position', [390, 175, 480, 215]);
+set_param([mdl '/Plant Disc'], 'Numerator', '[1]', ...
+    'Denominator', ['[1 ' num2str(c) ' ' num2str(k) ']']);
+
+add_block('simulink/Sinks/Scope', [mdl '/Scope'], ...
+    'Position', [500, 70, 550, 220]);
+set_param([mdl '/Scope'], 'NumInputPorts', '2');
+
+% 连线
+add_line(mdl, 'Step Ref/1', 'Sum Cont/1');
+add_line(mdl, 'Sum Cont/1', 'Kp_cont/1');
+add_line(mdl, 'Kp_cont/1', 'Plant Cont/1');
+add_line(mdl, 'Plant Cont/1', 'Scope/1');
+add_line(mdl, 'Plant Cont/1', 'Sum Cont/2');
+
+add_line(mdl, 'Step Ref/1', 'Sum Disc/1');
+add_line(mdl, 'Sum Disc/1', 'Kp_disc/1');
+add_line(mdl, 'Kp_disc/1', 'ZOH/1');
+add_line(mdl, 'ZOH/1', 'Plant Disc/1');
+add_line(mdl, 'Plant Disc/1', 'Scope/2');
+add_line(mdl, 'Plant Disc/1', 'Sum Disc/2');
+
+fprintf('  [Simulink 模型] tutorial15_codegen.slx — 连续 vs 离散 LQR 对比\n\n');
+
 %% ===== 第 3 步：生成 C 代码 =====
 
 % 选定采样周期
@@ -306,5 +369,8 @@ fprintf('  如果买了 Simulink Coder / Embedded Coder：\n');
 fprintf('    右键子系统 → C/C++ Code → Build → 自动生成 .c/.h\n');
 fprintf('    和手写一样的质量，但省掉调试时间\n\n');
 
-fprintf('  ― Phase 3 结束，全部教程 21 课 ―\n');
-fprintf('  继续学习：t16 频域分析 → t17 校正器 → t18-t21 高级控制专题\n');
+fprintf('  ― Phase 5 结束，全部教程 25 课 ―\n');
+fprintf('  恭喜完成全部课程！回顾路径：基础→经典→现代→高级→应用\n');
+
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
+close_system(mdl, 0);

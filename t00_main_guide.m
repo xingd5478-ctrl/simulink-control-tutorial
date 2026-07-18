@@ -7,7 +7,7 @@
 %    2. 添加模块、连线、设置参数
 %    3. 运行仿真并生成结果图
 %
-%  三个阶段，21 个教程：
+%  六个阶段，30 个教程：
 %
 %  Phase 1 — Simulink 基础
 %    t01_signal_basics      — 认识模块与信号
@@ -19,22 +19,37 @@
 %    t07_subsystem          — 子系统与模型封装
 %    t08_masking            — Mask 参数化封装
 %
-%  Phase 2 — 控制理论
+%  Phase 2 — 经典控制设计
+%    t16_freq_domain        — 频域分析：Bode/Nyquist/稳定裕度
+%    t17_lead_lag           — 超前-滞后校正器设计
+%    t22_root_locus          — 根轨迹法：极点走向决定行为
+%
+%  Phase 3 — 现代控制理论
 %    t09_state_space        — 状态空间模型
 %    t10_state_feedback     — 极点配置与 LQR 最优控制
 %    t11_observer           — Luenberger 状态观测器
 %    t12_kalman_filter      — Kalman 滤波
-%    t16_freq_domain        — 频域分析：Bode/Nyquist/稳定裕度
-%    t17_lead_lag           — 超前-滞后校正器设计
+%
+%  Phase 4 — 高级控制专题
 %    t18_system_id          — 系统辨识：从实验数据到模型
 %    t19_robust_control     — H∞ 鲁棒控制与 μ 分析
 %    t20_mpc                — 模型预测控制 (MPC)
 %    t21_sliding_mode       — 滑模控制：非线性鲁棒控制
+%    t23_mrac                — 模型参考自适应控制 (MRAC)
+%    t24_fuzzy_control       — 模糊逻辑控制
 %
-%  Phase 3 — 机电系统与部署
+%  Phase 5 — 机电系统与部署
 %    t13_dc_motor           — 直流电机建模与级联控制
 %    t14_foc_pmsm           — PMSM 矢量控制 (FOC)
+%    t25_simscape            — Simscape 物理建模
 %    t15_code_generation    — 离散化与 C 代码生成
+%
+%  Phase 6 — 综合应用案例
+%    t26_robot_kinematics   — 机器人运动学：DH参数与正逆解
+%    t27_msd_modeling       — MSD系统：四种建模方法对比
+%    t28_dsp_basics         — 数字信号处理：采样、FFT、滤波
+%    t29_msd_control        — MSD控制：PID整定、LQR、Kalman
+%    t30_active_suspension  — 主动悬挂：1/4车模型控制
 %
 %  使用方法：
 %    在 MATLAB 命令窗口中输入脚本名运行，例如：
@@ -50,7 +65,7 @@
 %  ============================================================
 
 fprintf('=================================================\n');
-fprintf('  Simulink 控制工程教程 — 15 课学习路径\n');
+fprintf('  Simulink 控制工程教程 — 30 课学习路径\n');
 fprintf('=================================================\n\n');
 
 fprintf('--- Phase 1: Simulink 基础 ---\n');
@@ -63,22 +78,37 @@ fprintf('第 6 课  | t06_sources_and_sinks  | 数据导入导出、多种信号
 fprintf('第 7 课  | t07_subsystem          | 子系统、模型层次化封装\n');
 fprintf('第 8 课  | t08_masking            | Mask 参数化封装\n\n');
 
-fprintf('--- Phase 2: 控制理论 ---\n');
+fprintf('--- Phase 2: 经典控制设计 ---\n');
+fprintf('第 16 课 | t16_freq_domain        | 频域分析 Bode/Nyquist/稳定裕度\n');
+fprintf('第 17 课 | t17_lead_lag           | 超前-滞后校正器设计\n');
+fprintf('第 22 课 | t22_root_locus          | 根轨迹法：极点走向决定行为\n\n');
+
+fprintf('--- Phase 3: 现代控制理论 ---\n');
 fprintf('第 9 课  | t09_state_space        | 状态空间模型 ẋ=Ax+Bu\n');
 fprintf('第 10 课 | t10_state_feedback     | 极点配置、LQR 最优控制\n');
 fprintf('第 11 课 | t11_observer           | Luenberger 状态观测器\n');
-fprintf('第 12 课 | t12_kalman_filter      | Kalman 滤波、噪声建模\n');
-fprintf('第 16 课 | t16_freq_domain        | 频域分析 Bode/Nyquist/稳定裕度\n');
-fprintf('第 17 课 | t17_lead_lag           | 超前-滞后校正器设计\n');
+fprintf('第 12 课 | t12_kalman_filter      | Kalman 滤波、噪声建模\n\n');
+
+fprintf('--- Phase 4: 高级控制专题 ---\n');
 fprintf('第 18 课 | t18_system_id          | 系统辨识：从数据到模型\n');
 fprintf('第 19 课 | t19_robust_control     | H∞ 鲁棒控制与 μ 分析\n');
 fprintf('第 20 课 | t20_mpc                | 模型预测控制 MPC\n');
-fprintf('第 21 课 | t21_sliding_mode       | 滑模控制：非线性鲁棒控制\n\n');
+fprintf('第 21 课 | t21_sliding_mode       | 滑模控制：非线性鲁棒控制\n');
+fprintf('第 23 课 | t23_mrac                | 模型参考自适应控制 MRAC\n');
+fprintf('第 24 课 | t24_fuzzy_control       | 模糊逻辑控制\n\n');
 
-fprintf('--- Phase 3: 机电系统与部署 ---\n');
+fprintf('--- Phase 5: 机电系统与部署 ---\n');
 fprintf('第 13 课 | t13_dc_motor           | 直流电机建模、级联 PI\n');
 fprintf('第 14 课 | t14_foc_pmsm           | PMSM、Clarke/Park、FOC\n');
+fprintf('第 25 课 | t25_simscape            | Simscape 物理建模\n');
 fprintf('第 15 课 | t15_code_generation    | 离散化、C 代码、嵌入式部署\n\n');
+
+fprintf('--- Phase 6: 综合应用案例 ---\n');
+fprintf('第 26 课 | t26_robot_kinematics   | DH参数、正逆运动学\n');
+fprintf('第 27 课 | t27_msd_modeling       | 四种建模方法对比\n');
+fprintf('第 28 课 | t28_dsp_basics         | 采样定理、FFT、滤波\n');
+fprintf('第 29 课 | t29_msd_control        | PID/LQR/Kalman控制\n');
+fprintf('第 30 课 | t30_active_suspension  | 1/4车主悬挂控制\n\n');
 
 fprintf('现在就运行第一课试试：>> t01_signal_basics\n');
 fprintf('=================================================\n');

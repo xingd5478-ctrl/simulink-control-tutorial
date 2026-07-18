@@ -23,6 +23,33 @@ fprintf('============================================\n');
 fprintf('  教程 18：系统辨识 — 从数据到模型\n');
 fprintf('============================================\n\n');
 
+%% ===== Simulink 模型：未知系统阶跃响应实验 =====
+
+mdl = 'tutorial18_sysid';
+if bdIsLoaded(mdl), close_system(mdl, 0); end
+new_system(mdl, 'Model');
+open_system(mdl);
+
+add_block('simulink/Sources/Step', [mdl '/Step Excite'], ...
+    'Position', [50, 80, 100, 120]);
+set_param([mdl '/Step Excite'], 'Time', '0.5', 'After', '2');
+
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Unknown Plant'], ...
+    'Position', [200, 80, 290, 120]);
+set_param([mdl '/Unknown Plant'], 'Numerator', '[2]', 'Denominator', '[3 1]');
+
+add_block('simulink/Sinks/Scope', [mdl '/Scope'], ...
+    'Position', [400, 80, 450, 120]);
+
+add_line(mdl, 'Step Excite/1', 'Unknown Plant/1');
+add_line(mdl, 'Unknown Plant/1', 'Scope/1');
+
+ph = get_param([mdl '/Unknown Plant'], 'PortHandles');
+set_param(ph.Outport(1), 'DataLogging', 'on', ...
+    'DataLoggingNameMode', 'Custom', 'DataLoggingName', 'y_plant');
+
+fprintf('  [Simulink] tutorial18_sysid.slx 已创建\n\n');
+
 %% ===== 第 1 步：生成"未知"系统的实验数据 =====
 
 % 假设我们不知道系统参数，只能做实验测数据
@@ -230,3 +257,5 @@ fprintf('  3. 数据预处理：去趋势、去野值、滤波\n');
 fprintf('  4. 试多种模型结构，用 AIC/BIC 选最优\n');
 fprintf('  5. 用独立数据集做交叉验证（不要用训练数据验证）\n');
 fprintf('  6. 辨识 → 控制器设计 → 再辨识 → 迭代优化\n');
+
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));

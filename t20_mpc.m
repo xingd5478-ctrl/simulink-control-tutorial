@@ -26,6 +26,27 @@
 
 clear; close all;
 
+%% ==== Simulink Model ====
+mdl = 'tutorial20_mpc';
+if bdIsLoaded(mdl), close_system(mdl, 0); end
+new_system(mdl, 'Model');
+open_system(mdl);
+add_block('simulink/Sources/Step', [mdl '/Step Ref'], 'Position', [50, 80, 100, 120]);
+set_param([mdl '/Step Ref'], 'Time', '0.5', 'After', '1');
+add_block('simulink/Continuous/Transfer Fcn', [mdl '/Plant'], 'Position', [350, 80, 440, 120]);
+set_param([mdl '/Plant'], 'Numerator', '[1]', 'Denominator', '[1 2 5]');
+add_block('simulink/Math Operations/Add', [mdl '/Sum'], 'Position', [150, 80, 180, 110]);
+set_param([mdl '/Sum'], 'Inputs', '|+-');
+add_block('simulink/Continuous/PID Controller', [mdl '/PID'], 'Position', [230, 75, 280, 115]);
+set_param([mdl '/PID'], 'P', '3', 'I', '0.3', 'D', '0.1', 'N', '100');
+add_block('simulink/Sinks/Scope', [mdl '/Scope'], 'Position', [550, 80, 600, 120]);
+add_line(mdl, 'Step Ref/1', 'Sum/1');
+add_line(mdl, 'Sum/1', 'PID/1');
+add_line(mdl, 'PID/1', 'Plant/1');
+add_line(mdl, 'Plant/1', 'Scope/1');
+add_line(mdl, 'Plant/1', 'Sum/2');
+fprintf('  [Simulink] tutorial20_mpc.slx created\n\n');
+
 fprintf('============================================\n');
 fprintf('  教程 20：模型预测控制 (MPC)\n');
 fprintf('============================================\n\n');
@@ -300,3 +321,5 @@ fprintf('  每次迭代求解一个 QP → 计算量大\n');
 fprintf('  QP 维数 = Nc × nu\n');
 fprintf('  对于快速系统 (Ts<1ms)，MPC 可能来不及算\n');
 fprintf('  → 工业上用显式 MPC：离线求解 → 查表在线\n');
+
+save_system(mdl, fullfile(fileparts(mfilename('fullpath')), 'models', [mdl '.slx']));
