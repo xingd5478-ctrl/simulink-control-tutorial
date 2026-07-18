@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Language-English%7C%E4%B8%AD%E6%96%87-blue?style=flat-square" alt="Bilingual">
   <img src="https://img.shields.io/github/stars/xingd5478-ctrl/simulink-control-tutorial?style=flat-square" alt="Stars">
   <img src="https://img.shields.io/github/last-commit/xingd5478-ctrl/simulink-control-tutorial?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/github/actions/workflow/status/xingd5478-ctrl/simulink-control-tutorial/ci.yml?style=flat-square&label=CI" alt="CI">
 </p>
 
 <h1 align="center">Simulink Control Engineering Tutorial</h1>
@@ -212,6 +213,16 @@ Issues and PRs are welcome! Bug reports, new tutorial ideas, and documentation i
 - Code/doc improvements → Fork → Modify → PR
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## Star History
+
+<a href="https://star-history.com/#xingd5478-ctrl/simulink-control-tutorial&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=xingd5478-ctrl/simulink-control-tutorial&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=xingd5478-ctrl/simulink-control-tutorial&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=xingd5478-ctrl/simulink-control-tutorial&type=Date" />
+  </picture>
+</a>
 
 ---
 

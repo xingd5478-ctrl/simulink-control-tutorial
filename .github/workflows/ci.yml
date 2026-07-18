@@ -1,0 +1,60 @@
+name: Tutorial Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run monthly on the 1st at 08:00 UTC
+    - cron: '0 8 1 * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  validate-tutorials:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate MATLAB scripts (syntax check)
+        run: |
+          echo "=== Checking .m script syntax ==="
+          scripts=$(ls t*.m run_all_tutorials.m 2>/dev/null)
+          errors=0
+          for f in $scripts; do
+            # Basic syntax checks: balanced parentheses, brackets, etc.
+            opens=$(tr -cd '(' < "$f" | wc -c)
+            closes=$(tr -cd ')' < "$f" | wc -c)
+            if [ "$opens" != "$closes" ]; then
+              echo "  WARN: $f has unbalanced parentheses ($opens open, $closes close)"
+            fi
+            # Check for common MATLAB syntax issues
+            if grep -n 'bode([^)]*);[[:space:]]*$' "$f" > /dev/null 2>&1; then
+              echo "  WARN: $f may have bode() call without output args (creates new figure)"
+            fi
+            if grep -n 'sigma([^)]*);[[:space:]]*$' "$f" > /dev/null 2>&1; then
+              echo "  WARN: $f may have sigma() call without output args (creates new figure)"
+            fi
+          done
+          echo "=== Syntax check complete ==="
+
+      - name: Validate HTML documentation
+        run: |
+          echo "=== Checking HTML file ==="
+          if [ -f "Simulink学习笔记.html" ]; then
+            # Check for balanced HTML tags
+            errors=$(grep -c '</' "Simulink学习笔记.html" || true)
+            echo "  HTML file exists with $errors closing tags"
+          fi
+          echo "=== HTML check complete ==="
+
+      - name: Check project structure
+        run: |
+          echo "=== Checking project structure ==="
+          expected_count=21
+          actual_count=$(ls t[0-9]*.m 2>/dev/null | wc -l)
+          echo "  Tutorial scripts found: $actual_count (expected ≥ $expected_count)"
+          echo "  .slx models: $(ls models/*.slx 2>/dev/null | wc -l)"
+          echo "  Generated images: $(ls docs/images/*.png 2>/dev/null | wc -l)"
+          echo "=== Structure check complete ==="

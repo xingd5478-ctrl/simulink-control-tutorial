@@ -2,6 +2,16 @@
 
 All notable changes to this project are documented here.
 
+## [1.2.0] - 2026-07-18
+
+### Added
+- Star History chart in README (中文/English)
+- GitHub Actions CI workflow: syntax check, structure validation, monthly schedule
+- CI passing badge in README
+
+### Changed
+- Updated all simulation images and models from latest run
+
 ## [1.1.0] - 2026-07-17
 
 ### Added

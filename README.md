@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Language-中文-red?style=flat-square" alt="Chinese">
   <img src="https://img.shields.io/github/stars/xingd5478-ctrl/simulink-control-tutorial?style=flat-square" alt="Stars">
   <img src="https://img.shields.io/github/last-commit/xingd5478-ctrl/simulink-control-tutorial?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/github/actions/workflow/status/xingd5478-ctrl/simulink-control-tutorial/ci.yml?style=flat-square&label=CI" alt="CI">
 </p>
 
 <h1 align="center">Simulink 控制工程教程</h1>
@@ -257,6 +258,16 @@ t01-t08 基础操作 ──→ t09 状态空间 ──→ t10 LQR 控制
 - 改进代码/文档 → Fork → 修改 → PR
 
 详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+## Star History
+
+<a href="https://star-history.com/#xingd5478-ctrl/simulink-control-tutorial&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=xingd5478-ctrl/simulink-control-tutorial&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=xingd5478-ctrl/simulink-control-tutorial&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=xingd5478-ctrl/simulink-control-tutorial&type=Date" />
+  </picture>
+</a>
 
 ---
 
