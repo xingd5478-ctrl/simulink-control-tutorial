@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/MATLAB-R2020a+-0076A8?style=flat-square&logo=matlab" alt="MATLAB">
   <img src="https://img.shields.io/badge/Simulink-Control_Engineering-FF6600?style=flat-square" alt="Simulink">
-  <img src="https://img.shields.io/badge/Tutorials-25_lessons-blue?style=flat-square" alt="25 Tutorials">
+  <img src="https://img.shields.io/badge/Tutorials-30_lessons-blue?style=flat-square" alt="30 Tutorials">
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT">
   <img src="https://img.shields.io/badge/Language-English%7C%E4%B8%AD%E6%96%87-blue?style=flat-square" alt="Bilingual">
   <img src="https://img.shields.io/github/stars/xingd5478-ctrl/simulink-control-tutorial?style=flat-square" alt="Stars">

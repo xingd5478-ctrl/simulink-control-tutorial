@@ -52,7 +52,7 @@ jobs:
       - name: Check project structure
         run: |
           echo "=== Checking project structure ==="
-          expected_count=25
+          expected_count=30
           actual_count=$(ls t[0-9]*.m 2>/dev/null | wc -l)
           echo "  Tutorial scripts found: $actual_count (expected ≥ $expected_count)"
           echo "  .slx models: $(ls models/*.slx 2>/dev/null | wc -l)"

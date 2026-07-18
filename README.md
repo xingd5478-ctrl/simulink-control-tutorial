@@ -1,9 +1,10 @@
 <p align="center">
   <img src="https://img.shields.io/badge/MATLAB-R2020a+-0076A8?style=flat-square&logo=matlab" alt="MATLAB">
   <img src="https://img.shields.io/badge/Simulink-Control_Engineering-FF6600?style=flat-square" alt="Simulink">
-  <img src="https://img.shields.io/badge/Tutorials-25_lessons-blue?style=flat-square" alt="25 Tutorials">
+  <img src="https://img.shields.io/badge/Tutorials-30_lessons-blue?style=flat-square" alt="30 Tutorials">
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT">
-  <img src="https://img.shields.io/badge/Language-中文-red?style=flat-square" alt="Chinese">
+  <img src="https://img.shields.io/badge/Language-中文%7CEnglish-red?style=flat-square" alt="Bilingual">
+  <img src="https://img.shields.io/badge/Release-v2.0.0-purple?style=flat-square" alt="v2.0.0">
   <img src="https://img.shields.io/github/stars/xingd5478-ctrl/simulink-control-tutorial?style=flat-square" alt="Stars">
   <img src="https://img.shields.io/github/last-commit/xingd5478-ctrl/simulink-control-tutorial?style=flat-square" alt="Last Commit">
   <img src="https://img.shields.io/github/actions/workflow/status/xingd5478-ctrl/simulink-control-tutorial/ci.yml?style=flat-square&label=CI" alt="CI">
